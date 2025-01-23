@@ -1,14 +1,8 @@
 package assignment1;
 
 public class Decide {
-    public int numPoints;
-    public double[] x;
-    public double[] y;
-    public int[][] lcm;
-    public boolean[] puv;
-    public Parameters param;
 
-    public static boolean DECIDE(){
+    public static boolean DECIDE(int numPoints, double[] x, double[] y, int[][] lcm, boolean[] puv, Parameters parameters){
         return true;
     }
 }
