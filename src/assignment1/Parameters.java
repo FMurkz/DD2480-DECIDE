@@ -1,11 +1,6 @@
 package assignment1;
 
-public class Input {
-    public int numPoints;
-    public double[] x;
-    public double[] y;
-    public int[][] lcm;
-    public boolean[] puv;
+public class Parameters {
     public double length1;         // Length in LICs 0, 7, 12
     public double epsilon;         // Deviation from PI in LICs 2, 9
     public double radius1;         // Radius in LICs 1, 8, 13
@@ -28,17 +23,10 @@ public class Input {
 
 
     //Constructor to initialize all the variables for the class
-    public Input(int numPoints, double[] x, double[] y, int[][] lcm, boolean[] puv,
-                        double length1, double epsilon, double radius1, double area1,
+    public Parameters(double length1, double epsilon, double radius1, double area1,
                         int qpts, int quads, double dist, int npts, int kpts, int aptS,
                         int bpts, int cpts, int dpts, int epts, int fpts, int gpts,
                         double length2, double radius2, double area2) {
-        
-        this.numPoints = numPoints;
-        this.x = x;
-        this.y = y;
-        this.lcm = lcm;
-        this.puv = puv;
         this.length1 = length1;
         this.epsilon = epsilon;
         this.radius1 = radius1;
