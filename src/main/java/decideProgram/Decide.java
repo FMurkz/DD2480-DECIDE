@@ -1,4 +1,4 @@
-package assignment1;
+package decideProgram;
 
 public class Decide {
 
