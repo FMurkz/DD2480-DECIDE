@@ -1,4 +1,4 @@
-package test.java.decideTest;
+package decideTest;
 import decideProgram.LIC;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
