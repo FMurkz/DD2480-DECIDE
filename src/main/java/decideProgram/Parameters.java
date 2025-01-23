@@ -1,4 +1,4 @@
-package assignment1;
+package decideProgram;
 
 public class Parameters {
     public double length1;         // Length in LICs 0, 7, 12
