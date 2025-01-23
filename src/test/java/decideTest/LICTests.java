@@ -47,4 +47,18 @@ public class LICTests {
         assertFalse(result, "Expected false because there are no data points");
     }
 
+    /**
+     * LIC0
+     * Test case where there is only one data point
+     */
+    @Test
+    public void test_condition0_One_datapoint() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{0};
+        double[] yList = new double[]{0};
+        int length1 = 2;
+        boolean result = lic.condition0(xList, yList, length1);
+        assertFalse(result, "Expected false because there is only one data point");
+    }
+
 }
