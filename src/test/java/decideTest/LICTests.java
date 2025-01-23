@@ -18,4 +18,19 @@ public class LICTests {
         boolean result = lic.condition0(xList, yList,length1);
         assertTrue(result, "Expected true because the distance between two points is greater than length1");
     }
+
+    /**
+     * LIC0
+     * Test case where the distance between two points is less than length1
+     */
+    @Test
+    public void test_condition0_Invalid() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        double[] yList = new double[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        int length1 = 10;
+        boolean result = lic.condition0(xList, yList, length1);
+        assertFalse(result, "Expected false because the distance is always less than length1");
+    }
+
 }
