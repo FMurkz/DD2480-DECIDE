@@ -63,7 +63,7 @@ public class LICTests {
 
     /**
      * LIC 7:
-     * 
+     * Test case where there exists at least one set of two data points separated by exactly KPTS consecutive intervening points that are a distance greater than the length1
      */
     @Test
     public void test_condition7_Valid() {
