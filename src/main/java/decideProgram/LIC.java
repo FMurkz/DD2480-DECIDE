@@ -310,8 +310,25 @@ public class LIC {
     }
 
 
-    public boolean condition10() {
-        return true;
+    /**
+     * LIC 10:
+     * There exists at least one set of three data points, separated by exactly 
+     * E_PTS and F_PTS consecutive intervening points, respectively, 
+     * that are the vertices of a triangle with area greater than AREA1.
+     * The condition is not met when NUMPOINTS < 5.
+     */
+    public boolean condition10(double[] x, double[] y, int epts, int fpts, double area1) {
+        if (x.length < 5) return false;  
+    
+        for (int i = 0; i < x.length - epts - fpts - 2; i++) {
+            double area = Math.abs(x[i] * (y[i + epts + 1] - y[i + epts + fpts + 2]) + 
+                                   x[i + epts + 1] * (y[i + epts + fpts + 2] - y[i]) + 
+                                   x[i + epts + fpts + 2] * (y[i] - y[i + epts + 1])) / 2;
+            if (area > area1) {
+                return true; 
+            }
+        }
+        return false;  
     }
 
     public boolean condition11() {
