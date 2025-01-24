@@ -22,9 +22,21 @@ public class LIC {
         return true;
     }
 
-    public boolean condition5(double[] X, double[] Y) {
-        return true;
+    public boolean condition5(double[] xArray, double[] yArray) {
+   
+    if (xArray.length != yArray.length) {
+        throw new IllegalArgumentException("xArray and yArray arrays must have the same length.");
     }
+
+    for (int i = 0; i < xArray.length - 1; i++) {  
+        int j = i + 1;
+        if (xArray[j] - xArray[i] < 0) {  
+            return true;  
+        }
+    }
+    return false;  
+}
+
 
     public boolean condition6() {
         return true;
