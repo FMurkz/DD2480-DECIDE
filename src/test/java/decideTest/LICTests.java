@@ -710,5 +710,51 @@ public class LICTests {
         assertFalse(result, "Expected false because there are not enough points to form a valid triangle");
     }
 
+    /**
+     * LIC 11
+     * Test case where a valid pair of points exists such that X[j] < X[i] with exactly G_PTS intervening points.
+     */
+    @Test
+    public void test_condition11_Valid() {
+        LIC lic = new LIC();
+        double[] xList = {5, 8, 3, 2, 6, 1, 4}; 
+        double[] yList = {1, 2, 3, 4, 5, 6, 7}; 
+        int gPts = 2;  
+        boolean result = lic.condition11(xList, yList, gPts);
+        assertTrue(result, "Expected true because there exists a valid pair where X[j] < X[i] and exactly G_PTS intervening points.");
+    }
+
+
+    /**
+     * LIC 11
+     * Test case where no valid pair of points exists with exactly G_PTS intervening points where X[j] < X[i].
+     */
+    @Test
+    public void test_condition11_Invalid() {
+        LIC lic = new LIC();
+        double[] xList = {5, 8, 10, 12, 14, 16, 18};  
+        double[] yList = {1, 2, 3, 4, 5, 6, 7};  
+        int gPts = 2;  
+        boolean result = lic.condition11(xList, yList, gPts);
+        assertFalse(result, "Expected false because there is no valid pair where X[j] < X[i] with exactly G_PTS intervening points.");
+    }
+
+
+
+    /**
+     * LIC 11
+     * Test case where IllegalArgumentException is thrown because xArray and yArray have different lengths.
+     */
+    @Test
+    public void test_condition11_IllegalArgumentException() {
+        LIC lic = new LIC();
+        double[] xList = {5, 8, 3, 2, 6}; 
+        double[] yList = {1, 2, 3, 4};    
+        int gPts = 2;  
+        assertThrows(IllegalArgumentException.class, () -> {
+            lic.condition11(xList, yList, gPts);
+        }, "Expected IllegalArgumentException because xArray and yArray have different lengths.");
+    }
+
 }
 
