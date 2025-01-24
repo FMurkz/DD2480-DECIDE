@@ -447,7 +447,22 @@ public class LICTests {
         assertFalse(result, "Expected false: radius equals RADIUS1");
     }
 
+    /**
+     * LIC9
+     * Test case where the three chosen points form a clear valid angle outside [PI - epsilon, PI + epsilon]
+     */
+    @Test
+    public void test_condition9_ValidCase() {
+        LIC lic = new LIC();
+        double[] xList = {0, 2, 4, 6, 3}; // The last point bends inward
+        double[] yList = {0, 0, 0, 0, 3}; // Last point is lifted up, creating an angle
+        int numPoints = 5;
+        double epsilon = 0.5;
+        int cPts = 1, dPts = 1;
 
+        boolean result = lic.condition9(xList, yList, numPoints, epsilon, cPts, dPts);
+        assertTrue(result, "Expected true because the last point lifts up, creating an angle outside [PI - epsilon, PI + epsilon].");
+    }
 
 
 
