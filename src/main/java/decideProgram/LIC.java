@@ -87,8 +87,14 @@ public class LIC {
         return true;
     }
 
-    public boolean condition3() {
-        return true;
+    public boolean condition3(double[] x, double[] y, double area1) {
+        for (int i = 0; i < x.length - 2; i++) {
+            double area = Math.abs(x[i] * (y[i+1] - y[i+2]) + x[i+1] * (y[i+2] - y[i]) + x[i+2] * (y[i] - y[i+1])) / 2;
+            if (area > area1) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean condition4() {
