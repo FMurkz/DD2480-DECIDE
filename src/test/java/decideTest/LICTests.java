@@ -61,6 +61,69 @@
             assertFalse(result, "Expected false because there is only one data point");
         }
 
+
+
+      /**
+       * LIC1
+       * Test case where three consecutive points form a circle with radius > RADIUS1
+       */
+      @Test
+      public void test_condition1_Valid() {
+          LIC lic = new LIC();
+          double[] xList = {0, 2, 1}; // Equilateral triangle (side length 2)
+          double[] yList = {0, 0, Math.sqrt(3)}; // Circumradius ≈ 1.1547
+          double RADIUS1 = 1.0;
+          boolean result = lic.condition1(xList, yList, RADIUS1);
+          assertTrue(result, "Expected true: circle radius exceeds RADIUS1");
+      }
+
+
+      /**
+       * LIC1
+       * Test case where all three-point circles have radius ≤ RADIUS1
+       */
+      @Test
+      public void test_condition1_Invalid() {
+          LIC lic = new LIC();
+          double[] xList = {0, 1, 0.5}; // Smaller equilateral triangle
+          double[] yList = {0, 0, Math.sqrt(3)/2}; // Circumradius ≈ 0.577
+          double RADIUS1 = 1.0;
+          boolean result = lic.condition1(xList, yList, RADIUS1);
+          assertFalse(result, "Expected false: all circles fit within RADIUS1");
+      }
+
+
+      /**
+       * LIC1
+       * Test case with collinear points (radius = farthest distance/2)
+       */
+      @Test
+      public void test_condition1_Collinear() {
+          LIC lic = new LIC();
+          double[] xList = {0, 2, 4}; // Collinear points (distance 4 between first/last)
+          double[] yList = {0, 0, 0};
+          double RADIUS1 = 1.9; // Required radius = 2.0 (4/2)
+          boolean result = lic.condition1(xList, yList, RADIUS1);
+          assertTrue(result, "Expected true: required radius (2.0) > RADIUS1 (1.9)");
+      }
+
+
+    /**
+     * LIC1
+     * Test case with exactly 3 points and radius = RADIUS1
+     */
+    @Test
+    public void test_condition1_ExactRadius() {
+        LIC lic = new LIC();
+        double[] xList = {0, 2, 4}; // Collinear points
+        double[] yList = {0, 0, 0};
+        double RADIUS1 = 2.0; // Exactly matches required radius
+        boolean result = lic.condition1(xList, yList, RADIUS1);
+        assertFalse(result, "Expected false: radius equals RADIUS1");
+    }
+
+}
+
         /**
         * LIC3
         * Test case where the area of the triangle formed by three points is greater than AREA1
@@ -127,3 +190,4 @@
         
 
     }
+
