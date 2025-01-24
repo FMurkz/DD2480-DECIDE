@@ -299,5 +299,24 @@ public class LICTests {
         boolean result = lic.condition2(xList, yList, numPoints, epsilon);
         assertFalse(result, "Expected false because the angle is undefined due to coinciding points.");
     }
+
+    /**
+     * LIC8
+     * Test case where three spaced points form a circle with radius > RADIUS1
+     */
+    @Test
+    public void test_condition8_Valid() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 10}; // Points 0, 2, 4 (A_PTS=1, B_PTS=1)
+        double[] yList = {0, 0, 0, 0, 0};
+        double RADIUS1 = 4.0; // Distance between points 0 and 4 is 10 → radius = 5.0
+        int A_PTS = 1, B_PTS = 1;
+        boolean result = lic.condition8(xList, yList, RADIUS1, A_PTS, B_PTS);
+        assertTrue(result, "Expected true: radius 5.0 > RADIUS1 4.0");
+    }
+
+
+
+
 }
 
