@@ -300,5 +300,21 @@ public class LICTests {
         int numPoints = 4;
         assertFalse(lic.condition12(xList, yList, numPoints, kPts, length1, length2), "Expected false because condition is met for length1 but not for length2");
     }
+
+    /**
+     * LIC 12:
+     * Test case where condition is met for length2 but not for length1
+     */
+    @Test
+    public void test_condition12_Length2_met_Length1_not_met() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 4, 5};
+        double[] yList = {0, 0, 0, 0};
+        int kPts = 1;
+        int length1 = 5;
+        int length2 = 2;
+        int numPoints = 4;
+        assertFalse(lic.condition12(xList, yList, numPoints, kPts, length1, length2), "Expected false because condition is met for length2 but not for length1");
+    }
 }
 
