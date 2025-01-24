@@ -176,6 +176,19 @@ public class LICTests {
 
 
     @Test
+    public void test_perpendicularDistance_Valid() {
+        double x1 = 0, y1 = 0;
+        double x2 = 4, y2 = 0;
+        double x0 = 2, y0 = 3; // A point above the line (distance should be 3)
+
+        double expectedDistance = 3.0;
+        double result = LIC.perpendicularDistance(x1, y1, x2, y2, x0, y0);
+        
+        assertEquals(expectedDistance, result, "Expected perpendicular distance to be 3.0");
+    }
+
+
+    @Test
     public void test_condition6_Valid() {
        
         LIC lic = new LIC();
