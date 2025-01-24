@@ -284,5 +284,21 @@ public class LICTests {
         int numPoints = 2;
         assertFalse(lic.condition12(xList, yList, numPoints, kPts, length1, length2), "Expected false because there are less than 3 data points");
     }
+
+    /**
+     * LIC 12:
+     * Test case where condition is met for length1 but not for length2
+     */
+    @Test
+    public void test_condition12_Length1_met_Length2_not_met() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 4, 5};
+        double[] yList = {0, 0, 0, 0};
+        int kPts = 1;
+        int length1 = 2;
+        int length2 = 3;
+        int numPoints = 4;
+        assertFalse(lic.condition12(xList, yList, numPoints, kPts, length1, length2), "Expected false because condition is met for length1 but not for length2");
+    }
 }
 
