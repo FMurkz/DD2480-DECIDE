@@ -332,6 +332,24 @@ public class LICTests {
     }
 
 
+    /**
+     * LIC8
+     * Test case with collinear points (radius = farthest distance/2)
+     */
+    @Test
+    public void test_condition8_Collinear() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 8}; // Points 0, 2, 4 (distance 8)
+        double[] yList = {0, 0, 0, 0, 0};
+        double RADIUS1 = 3.9; // Radius = 4.0 (8/2)
+        int A_PTS = 1, B_PTS = 1;
+        boolean result = lic.condition8(xList, yList, RADIUS1, A_PTS, B_PTS);
+        assertTrue(result, "Expected true: radius 4.0 > RADIUS1 3.9");
+    }
+
+
+
+
 
 
 
