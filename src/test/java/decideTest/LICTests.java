@@ -319,5 +319,23 @@ public class LICTests {
         assertTrue(result, "Expected true: both conditions met");
     }
 
+
+    /**
+     * LIC13
+     * Test case where Part A fails (no triplet > RADIUS1)
+     */
+    @Test
+    public void test_condition13_InvalidPartA() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 4}; // All triplets have radius ≤ 2.0
+        double[] yList = {0, 0, 0, 0, 0};
+        double RADIUS1 = 3.0; // Part A fails
+        double RADIUS2 = 1.0; // Part B passes (radius = 2.0 > 1.0 ❌)
+        int A_PTS = 1, B_PTS = 1;
+        boolean result = lic.condition13(xList, yList, RADIUS1, RADIUS2, A_PTS, B_PTS);
+        assertFalse(result, "Expected false: Part A fails");
+    }
+
+
 }
 
