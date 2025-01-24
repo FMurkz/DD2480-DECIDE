@@ -178,8 +178,32 @@ public class LIC {
     }
 
 
-    public boolean condition8() {
-        return true;
+    public boolean condition8(double[] xArray, double[] yArray, double RADIUS1, int A_PTS, int B_PTS) {
+        if (xArray.length != yArray.length) throw new IllegalArgumentException("xArray and yArray must have the same length");
+        if (RADIUS1 < 0) throw new IllegalArgumentException("RADIUS1 must be greater than or equal to 0");
+        if (A_PTS < 1 || B_PTS < 1) throw new IllegalArgumentException("A_PTS and B_PTS must be at least 1");
+        if (A_PTS + B_PTS > xArray.length - 3) throw new IllegalArgumentException("A_PTS + B_PTS must be less than or equal to the length of xArray minus 3");
+
+
+
+    int numPoints = xArray.length;
+    
+       
+    for (int i = 0; i <= numPoints - (A_PTS + B_PTS + 3); i++) {
+        int j = i + A_PTS + 1; 
+        int k = j + B_PTS + 1; 
+
+        double[] p1 = {xArray[i], yArray[i]};
+        double[] p2 = {xArray[j], yArray[j]};
+        double[] p3 = {xArray[k], yArray[k]};
+
+        
+        double radius = minimalEnclosingCircleRadius(p1, p2, p3);
+        if (radius > RADIUS1) { 
+            return true; 
+            }
+        }
+        return false;
     }
 
     public boolean condition9() {
