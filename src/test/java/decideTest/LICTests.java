@@ -347,6 +347,22 @@ public class LICTests {
         assertTrue(result, "Expected true: radius 4.0 > RADIUS1 3.9");
     }
 
+    /**
+     * LIC8
+     * Test case with exact radius (radius = RADIUS1)
+     */
+    @Test
+    public void test_condition8_ExactRadius() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 6}; // Points 0, 2, 4 (distance 6)
+        double[] yList = {0, 0, 0, 0, 0};
+        double RADIUS1 = 3.0; // Exactly matches radius (6/2)
+        int A_PTS = 1, B_PTS = 1;
+        boolean result = lic.condition8(xList, yList, RADIUS1, A_PTS, B_PTS);
+        assertFalse(result, "Expected false: radius equals RADIUS1");
+    }
+
+
 
 
 
