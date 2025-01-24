@@ -593,5 +593,22 @@ public class LICTests {
         boolean result = lic.condition10(xList, yList, epts, fpts, area1);
         assertTrue(result, "Expected true because the area of the triangle formed by the points is greater than AREA1");
     }
+
+    /**
+     * LIC 10:
+     * Test case where the area of the triangle formed by three points separated by exactly E_PTS and F_PTS is smaller than AREA1
+     */
+    @Test
+    public void test_condition10_Invalid() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{0, 1, 0, 3, 4};  
+        double[] yList = new double[]{0, 0, 1, 0, 1};  
+        int epts = 1;  
+        int fpts = 1;  
+        double area1 = 2.0; 
+        boolean result = lic.condition10(xList, yList, epts, fpts, area1);
+        assertFalse(result, "Expected false because the area of the triangle formed by the points is less than or equal to AREA1");
+    }
+
 }
 
