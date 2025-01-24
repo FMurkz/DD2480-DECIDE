@@ -561,5 +561,21 @@ public class LICTests {
         boolean result = lic.condition4(xList, yList, numPoints, qPts, quads);
         assertTrue(result, "Expected true because the points cross multiple quadrants (II -> I).");
     }
+    /**
+     * LIC4
+     * Test case where all points are on the y-axis
+     */
+    @Test
+    public void test_condition4_AllOnYAxis() {
+        LIC lic = new LIC();
+        double[] xList = {0, 0, 0, 0, 0};  // Stays on the y-axis
+        double[] yList = {-2, -1, 0, 1, 2};  // Moves from Quadrant III -> I
+        int numPoints = 5;
+        int qPts = 5;
+        int quads = 1;
+
+        boolean result = lic.condition4(xList, yList, numPoints, qPts, quads);
+        assertTrue(result, "Expected true because the points cross multiple quadrants (III -> I).");
+    }
 }
 
