@@ -92,5 +92,20 @@ public class LICTests {
     }
 
 
+    /**
+     * LIC1
+     * Test case with collinear points (radius = farthest distance/2)
+     */
+    @Test
+    public void test_condition1_Collinear() {
+        LIC lic = new LIC();
+        double[] xList = {0, 2, 4}; // Collinear points (distance 4 between first/last)
+        double[] yList = {0, 0, 0};
+        double RADIUS1 = 1.9; // Required radius = 2.0 (4/2)
+        boolean result = lic.condition1(xList, yList, RADIUS1);
+        assertTrue(result, "Expected true: required radius (2.0) > RADIUS1 (1.9)");
+    }
+
+
 
 }
