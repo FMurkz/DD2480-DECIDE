@@ -545,6 +545,21 @@ public class LICTests {
         boolean result = lic.condition4(xList, yList, numPoints, qPts, quads);
         assertFalse(result, "Expected false because all points are in the same location (quadrant I).");
     }
+    /**
+     * LIC4
+     * Test case where all points are on the x-axis
+     */
+    @Test
+    public void test_condition4_AllOnXAxis() {
+        LIC lic = new LIC();
+        double[] xList = {-2, -1, 0, 1, 2};  // Moves from Quadrant II -> I
+        double[] yList = {0, 0, 0, 0, 0};  
+        int numPoints = 5;
+        int qPts = 5;
+        int quads = 1;
 
+        boolean result = lic.condition4(xList, yList, numPoints, qPts, quads);
+        assertTrue(result, "Expected true because the points cross multiple quadrants (II -> I).");
+    }
 }
 
