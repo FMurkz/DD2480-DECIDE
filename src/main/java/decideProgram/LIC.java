@@ -40,6 +40,18 @@ public class LIC {
     }
     
     
+    /**
+      * Calculates the perpendicular distance from a point (x0, y0) 
+      * to the line formed by two points (x1, y1) and (x2, y2).
+    */
+     public static double perpendicularDistance(double x1, double y1, double x2, double y2, double x0, double y0) {
+        double A = y2 - y1;
+        double B = -(x2 - x1);
+        double C = (x2 * y1) - (x1 * y2);
+
+        return Math.abs(A * x0 + B * y0 + C) / Math.sqrt(A * A + B * B);
+    }
+
 
     /**
      * LIC 0: There exists at least one set of two 
@@ -200,9 +212,55 @@ public class LIC {
         return true;
     }
 
-    public boolean condition6() {
-        return true;
+
+    /**
+     * Checks if at least one set of N_PTS consecutive points has a distance greater than DIST
+     * from the line joining the first and last points. If the first and last points are identical,
+     * the distance is calculated from the coincident point to the others.
+     * 
+     * @param xArray  Array of x coordinates.
+     * @param yArray  Array of y coordinates.
+     * @param npts    Number of consecutive points to check.
+     * @param dist    Distance threshold.
+     * @return        True if the condition is met, otherwise false.
+    */
+    public boolean condition6(double[] xArray, double[] yArray, int npts, double dist) {
+        if (xArray.length != yArray.length) {
+            throw new IllegalArgumentException("xArray and yArray must have the same length");
+        }
+        int numPoints = xArray.length;
+    
+        if (npts < 3 || numPoints < 3 || npts > xArray.length) {
+            return false;
+        }
+    
+        if (dist < 0) {
+            throw new IllegalArgumentException("DIST cannot be negative");
+        }      
+    
+        for (int i = 0; i <= numPoints - npts; i++) {
+            double[] npts_xPoints = new double[npts];
+            double[] npts_yPoints = new double[npts];
+    
+            System.arraycopy(xArray, i, npts_xPoints, 0, npts);
+            System.arraycopy(yArray, i, npts_yPoints, 0, npts);
+    
+            double firstPoint_x = npts_xPoints[0], firstPoint_y = npts_yPoints[0];
+            double lastPoint_x = npts_xPoints[npts - 1], lastPoint_y = npts_yPoints[npts - 1];
+    
+            for (int j = 1; j < npts - 1; j++) {
+                double currentPoint_x = npts_xPoints[j], currentPoint_y = npts_yPoints[j];
+                double distance = perpendicularDistance(firstPoint_x, firstPoint_y, lastPoint_x, lastPoint_y, currentPoint_x, currentPoint_y);
+    
+                if (distance > dist) {
+                    return true;
+                }
+            }
+        }
+    
+        return false;
     }
+    
 
     /**
      * LIC 7: 

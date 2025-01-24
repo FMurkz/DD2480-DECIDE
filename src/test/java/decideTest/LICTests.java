@@ -174,6 +174,104 @@ public class LICTests {
         assertFalse(result, "Expected false because there are fewer than three data points to form a triangle");
     }
 
+
+    /**
+     * Test case for calculating the perpendicular distance, where the expected distance is 3.0.
+     */
+    @Test
+    public void test_perpendicularDistance_Valid() {
+        double x1 = 0, y1 = 0;
+        double x2 = 4, y2 = 0;
+        double x0 = 2, y0 = 3; // A point above the line (distance should be 3)
+
+        double expectedDistance = 3.0;
+        double result = LIC.perpendicularDistance(x1, y1, x2, y2, x0, y0);
+        
+        assertEquals(expectedDistance, result, "Expected perpendicular distance to be 3.0");
+    }
+
+
+    /**
+     * LIC6
+     * Test case where there is a set of consecutive points that satisfies the condition: distance > DIST
+     */
+    @Test
+    public void test_condition6_Valid() {
+       
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 4};
+        double[] yList = {0, 1, 4, 1, 4};
+        int npts = 3;
+        double dist = 2.0;
+
+        boolean result = lic.condition6(xList, yList, npts, dist);
+        assertTrue(result,  "Expected true because at least one point lies greater than DIST from the line joining the first and last points");
+    }
+
+    /**
+     * LIC6
+     * Test case where there is no set of consecutive points satisfying the condition
+     */
+    @Test
+    public void test_condition6_Invalid() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{0, 1, 2, 3, 4}; 
+        double[] yList = new double[]{0, 1, 2, 3, 4}; 
+        int npts = 3;
+        double dist = 2.0;
+        boolean result = lic.condition6(xList, yList, npts, dist);
+        assertFalse(result, "Expected false because no points lie greater than DIST from the line joining the first and last points");
+    }
+
+    /**
+     * LIC6
+     * Test case with fewer than 3 data points
+     */
+    @Test
+    public void test_condition6_LessThan3Points() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{0, 1};  // Less than three points
+        double[] yList = new double[]{0, 1};
+        int npts = 3;
+        double dist = 2.0;
+        boolean result = lic.condition6(xList, yList, npts, dist);
+        assertFalse(result, "Expected false because there are fewer than 3 data points");
+    }
+
+    /**
+     * LIC6
+     *  Test case where xArray and yArray have different lengths.
+     */
+    @Test
+    public void test_condition6_XArrayNotEqualYArray() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{0, 1, 2, 3, 4};
+        double[] yList = new double[]{0, 1, 2}; // Different length
+        int npts = 3;
+        double dist = 2.0;
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            lic.condition6(xList, yList, npts, dist);
+        }, "Expected IllegalArgumentException because xArray and yArray have different lengths");
+    }
+
+    /**
+     * LIC6
+     * Test case where the distance (DIST) is negative, which should trigger an exception.
+     */
+    @Test
+    public void test_condition6_DistNegative() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{0, 1, 2, 3, 4};
+        double[] yList = new double[]{0, 1, 2, 3, 4};
+        int npts = 3;
+        double dist = -2.0; // Negative distance
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            lic.condition6(xList, yList, npts, dist);
+        }, "Expected IllegalArgumentException because DIST cannot be negative");
+    }
+
     /**
      * LIC 7:
      * Test case where there exists at least one set of two data points separated by exactly KPTS consecutive intervening points that are a distance greater than the length1
