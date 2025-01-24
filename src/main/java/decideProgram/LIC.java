@@ -331,6 +331,18 @@ public class LIC {
         return false;  
     }
 
+    /**
+     * LIC 11: There exists at least one set of two data points, (X[i], Y[i]) and (X[j], Y[j]), 
+     * separated by exactly G_PTS consecutive intervening points, such that X[j] < X[i]. 
+     * The condition is not met if NUMPOINTS < 3.
+     *
+     * @param xArray The array of X coordinates of the points.
+     * @param yArray The array of Y coordinates of the points. It must have the same length as xArray.
+     * @param gPts The number of intervening points between the two points being checked.
+     * @return true if a valid pair of points is found; false otherwise.
+     * @throws IllegalArgumentException if xArray and yArray have different lengths.
+     */
+
     public boolean condition11(double[] xArray, double[] yArray, int gPts) {
         if (xArray.length != yArray.length) {
             throw new IllegalArgumentException("xArray and yArray must have the same length");
@@ -341,7 +353,7 @@ public class LIC {
             return false;
         }
         for (int i = 0; i < numPoints - gPts - 1; i++) {
-            
+
             int j = i + gPts + 1;
             if (xArray[j] < xArray[i]) {
                 return true; 
