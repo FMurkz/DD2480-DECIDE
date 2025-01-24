@@ -610,5 +610,21 @@ public class LICTests {
         assertFalse(result, "Expected false because the area of the triangle formed by the points is less than or equal to AREA1");
     }
 
+    /**
+     * LIC 10:
+     * Test case where there are fewer than 5 data points
+     */
+    @Test
+    public void test_condition10_four_datapoints() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{0, 1, 2, 3};
+        double[] yList = new double[]{0, 0, 0, 0}; 
+        int epts = 1; 
+        int fpts = 1;  
+        double area1 = 3.0;  
+        boolean result = lic.condition10(xList, yList, epts, fpts, area1);
+        assertFalse(result, "Expected false because there are not enough points to form a valid triangle");
+    }
+
 }
 
