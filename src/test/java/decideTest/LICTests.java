@@ -310,10 +310,10 @@ public class LICTests {
     @Test
     public void test_condition13_Valid() {
         LIC lic = new LIC();
-        double[] xList = {0, 1, 2, 3, 10, 1, 2}; // Triplet 0-3-6 (radius 5.0) and 1-4-5 (radius 0.0)
+        double[] xList = {0, 1, 2, 3, 10, 1, 2}; 
         double[] yList = {0, 0, 0, 0, 0, 0, 0};
-        double RADIUS1 = 4.0; // Part A: 5.0 > 4.0 ✔️
-        double RADIUS2 = 0.5; // Part B: 0.0 ≤ 0.5 ✔️
+        double RADIUS1 = 4.0; // Part A: 5.0 > 4.0 
+        double RADIUS2 = 0.5; // Part B: 0.0 ≤ 0.5 
         int A_PTS = 2, B_PTS = 2;
         boolean result = lic.condition13(xList, yList, RADIUS1, RADIUS2, A_PTS, B_PTS);
         assertTrue(result, "Expected true: both conditions met");
@@ -327,15 +327,30 @@ public class LICTests {
     @Test
     public void test_condition13_InvalidPartA() {
         LIC lic = new LIC();
-        double[] xList = {0, 1, 2, 3, 4}; // All triplets have radius ≤ 2.0
+        double[] xList = {0, 1, 2, 3, 4}; 
         double[] yList = {0, 0, 0, 0, 0};
         double RADIUS1 = 3.0; // Part A fails
-        double RADIUS2 = 1.0; // Part B passes (radius = 2.0 > 1.0 ❌)
+        double RADIUS2 = 1.0; // Part B passes 
         int A_PTS = 1, B_PTS = 1;
         boolean result = lic.condition13(xList, yList, RADIUS1, RADIUS2, A_PTS, B_PTS);
         assertFalse(result, "Expected false: Part A fails");
     }
 
+    /**
+     * LIC13
+     * Test case where Part B fails (no triplet ≤ RADIUS2)
+     */
+    @Test
+    public void test_condition13_InvalidPartB() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 6}; 
+        double[] yList = {0, 0, 0, 0, 0};
+        double RADIUS1 = 2.0; // Part A passes 
+        double RADIUS2 = 2.5; // Part B fails 
+        int A_PTS = 1, B_PTS = 1;
+        boolean result = lic.condition13(xList, yList, RADIUS1, RADIUS2, A_PTS, B_PTS);
+        assertFalse(result, "Expected false: Part B fails");
+    }
 
     /**
      * LIC13
@@ -362,8 +377,8 @@ public class LICTests {
         LIC lic = new LIC();
         double[] xList = {5, 1, 5, 1, 5}; // Triplet 0-2-4: all points (5,0)
         double[] yList = {0, 0, 0, 0, 0};
-        double RADIUS1 = 0.0; // Part A: 0.0 > 0.0 ❌
-        double RADIUS2 = 0.0; // Part B: 0.0 ≤ 0.0 ✔️
+        double RADIUS1 = 0.0; // Part A: 0.0 > 0.0 
+        double RADIUS2 = 0.0; // Part B: 0.0 ≤ 0.0 
         int A_PTS = 1, B_PTS = 1;
         boolean result = lic.condition13(xList, yList, RADIUS1, RADIUS2, A_PTS, B_PTS);
         assertFalse(result, "Expected false: Part A fails (radius 0)");
