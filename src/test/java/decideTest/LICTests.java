@@ -175,6 +175,9 @@ public class LICTests {
     }
 
 
+    /**
+     * Test case for calculating the perpendicular distance, where the expected distance is 3.0.
+     */
     @Test
     public void test_perpendicularDistance_Valid() {
         double x1 = 0, y1 = 0;
@@ -188,6 +191,10 @@ public class LICTests {
     }
 
 
+    /**
+     * LIC6
+     * Test case where there is a set of consecutive points that satisfies the condition: distance > DIST
+     */
     @Test
     public void test_condition6_Valid() {
        
@@ -201,6 +208,10 @@ public class LICTests {
         assertTrue(result,  "Expected true because at least one point lies greater than DIST from the line joining the first and last points");
     }
 
+    /**
+     * LIC6
+     * Test case where there is no set of consecutive points satisfying the condition
+     */
     @Test
     public void test_condition6_Invalid() {
         LIC lic = new LIC();
@@ -212,6 +223,10 @@ public class LICTests {
         assertFalse(result, "Expected false because no points lie greater than DIST from the line joining the first and last points");
     }
 
+    /**
+     * LIC6
+     * Test case with fewer than 3 data points
+     */
     @Test
     public void test_condition6_LessThan3Points() {
         LIC lic = new LIC();
@@ -223,6 +238,10 @@ public class LICTests {
         assertFalse(result, "Expected false because there are fewer than 3 data points");
     }
 
+    /**
+     * LIC6
+     *  Test case where xArray and yArray have different lengths.
+     */
     @Test
     public void test_condition6_XArrayNotEqualYArray() {
         LIC lic = new LIC();
@@ -236,6 +255,10 @@ public class LICTests {
         }, "Expected IllegalArgumentException because xArray and yArray have different lengths");
     }
 
+    /**
+     * LIC6
+     * Test case where the distance (DIST) is negative, which should trigger an exception.
+     */
     @Test
     public void test_condition6_DistNegative() {
         LIC lic = new LIC();
