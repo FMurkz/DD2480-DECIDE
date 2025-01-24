@@ -236,5 +236,23 @@ public class LICTests {
         int length1 = 1;
         assertThrows(IllegalArgumentException.class, () -> lic.condition7(xList, yList, numPoints, kPts, length1), "Expected IllegalArgumentException because KPTS is less than 1");
     }
+
+    /**
+     * LIC 12:
+     * Test case where there exists at least one set of two data points separated by exactly KPTS consecutive intervening points that are a distance greater than the length1 and one set of data points separated by exactly KPTS consecutive intervening points that are a distance less than the length2
+     */
+    @Test
+    public void test_condition12_Valid() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 4, 5};
+        double[] yList = {0, 0, 0, 0};
+        int kPts = 1;
+        int length1 = 2;
+        int length2 = 5;
+        int numPoints = 4;
+        assertTrue(lic.condition12(xList, yList, numPoints, kPts, length1, length2), "Expected true because there exists at least one set of two data points separated by exactly KPTS consecutive intervening points that are a distance greater than the length1 and one set of data points separated by exactly KPTS consecutive intervening points that are a distance less than the length2");
+    }
+
+   
 }
 
