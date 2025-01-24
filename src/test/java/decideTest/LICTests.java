@@ -61,4 +61,20 @@ public class LICTests {
         assertFalse(result, "Expected false because there is only one data point");
     }
 
+    /**
+     * LIC 7:
+     * 
+     */
+    @Test
+    public void test_condition7_Valid() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{0, 1, 4};
+        double[] yList = new double[]{0, 1, 5};
+        int numPoints = 3;
+        int kPts = 1;
+        int length1 = 2;
+        boolean result = lic.condition7(xList, yList, numPoints, kPts, length1);
+        assertTrue(result, "Expected true because there exists at least one set of two data points separated by exactly KPTS consecutive intervening points that are a distance greater than the length1");
+    }
+
 }
