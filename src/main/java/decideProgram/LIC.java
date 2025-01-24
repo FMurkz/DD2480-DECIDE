@@ -23,7 +23,25 @@ public class LIC {
     }
 
     public boolean condition1(double[] xArray, double[] yArray, double radius1) {
-        return true;
+
+        if (xArray.length != yArray.length) throw new IllegalArgumentException("xArray and yArray must have the same length");
+
+        if (radius1 < 0) throw new IllegalArgumentException("Radius1 must be greater than or equal to 0");
+
+        if (xArray.length < 3) return false;
+
+        for (int i = 0; i < xArray.length - 2; i++) {
+            double[] p1 = {xArray[i], yArray[i]};
+            double[] p2 = {xArray[i+1], yArray[i+1]};
+            double[] p3 = {xArray[i+2], yArray[i+2]};
+        
+            double radius = minimalEnclosingCircleRadius(p1, p2, p3); // Will add this helper method later.
+            if (radius > radius1) { 
+                return true;
+            }
+        }
+        return false;
+      
     }
 
     public boolean condition2() {
