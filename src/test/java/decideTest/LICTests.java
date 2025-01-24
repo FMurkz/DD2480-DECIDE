@@ -710,6 +710,10 @@ public class LICTests {
         assertFalse(result, "Expected false because there are not enough points to form a valid triangle");
     }
 
+    /**
+     * LIC 11
+     * Test case where a valid pair of points exists such that X[j] < X[i] with exactly G_PTS intervening points.
+     */
     @Test
     public void test_condition11_Valid() {
         LIC lic = new LIC();
@@ -721,6 +725,10 @@ public class LICTests {
     }
 
 
+    /**
+     * LIC 11
+     * Test case where no valid pair of points exists with exactly G_PTS intervening points where X[j] < X[i].
+     */
     @Test
     public void test_condition11_Invalid() {
         LIC lic = new LIC();
@@ -733,6 +741,10 @@ public class LICTests {
 
 
 
+    /**
+     * LIC 11
+     * Test case where IllegalArgumentException is thrown because xArray and yArray have different lengths.
+     */
     @Test
     public void test_condition11_IllegalArgumentException() {
         LIC lic = new LIC();
