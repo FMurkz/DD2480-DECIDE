@@ -301,6 +301,7 @@ public class LICTests {
     }
 
 
+
     /**
      * LIC13
      * Test case where both conditions are met:
@@ -383,6 +384,74 @@ public class LICTests {
         boolean result = lic.condition13(xList, yList, RADIUS1, RADIUS2, A_PTS, B_PTS);
         assertFalse(result, "Expected false: Part A fails (radius 0)");
     }
+
+    /**
+     * LIC8
+     * Test case where three spaced points form a circle with radius > RADIUS1
+     */
+    @Test
+    public void test_condition8_Valid() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 10}; // Points 0, 2, 4 (A_PTS=1, B_PTS=1)
+        double[] yList = {0, 0, 0, 0, 0};
+        double RADIUS1 = 4.0; // Distance between points 0 and 4 is 10 → radius = 5.0
+        int A_PTS = 1, B_PTS = 1;
+        boolean result = lic.condition8(xList, yList, RADIUS1, A_PTS, B_PTS);
+        assertTrue(result, "Expected true: radius 5.0 > RADIUS1 4.0");
+    }
+
+
+    /**
+     * LIC8
+     * Test case where all triplets fit within RADIUS1
+     */
+    @Test
+    public void test_condition8_Invalid() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 4}; // Points 0, 2, 4 (A_PTS=1, B_PTS=1)
+        double[] yList = {0, 0, 0, 0, 0};
+        double RADIUS1 = 3.0; // Distance between 0 and 4 is 4 → radius = 2.0
+        int A_PTS = 1, B_PTS = 1;
+        boolean result = lic.condition8(xList, yList, RADIUS1, A_PTS, B_PTS);
+        assertFalse(result, "Expected false: radius 2.0 ≤ RADIUS1 3.0");
+    }
+
+
+    /**
+     * LIC8
+     * Test case with collinear points (radius = farthest distance/2)
+     */
+    @Test
+    public void test_condition8_Collinear() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 8}; // Points 0, 2, 4 (distance 8)
+        double[] yList = {0, 0, 0, 0, 0};
+        double RADIUS1 = 3.9; // Radius = 4.0 (8/2)
+        int A_PTS = 1, B_PTS = 1;
+        boolean result = lic.condition8(xList, yList, RADIUS1, A_PTS, B_PTS);
+        assertTrue(result, "Expected true: radius 4.0 > RADIUS1 3.9");
+    }
+
+    /**
+     * LIC8
+     * Test case with exact radius (radius = RADIUS1)
+     */
+    @Test
+    public void test_condition8_ExactRadius() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 6}; // Points 0, 2, 4 (distance 6)
+        double[] yList = {0, 0, 0, 0, 0};
+        double RADIUS1 = 3.0; // Exactly matches radius (6/2)
+        int A_PTS = 1, B_PTS = 1;
+        boolean result = lic.condition8(xList, yList, RADIUS1, A_PTS, B_PTS);
+        assertFalse(result, "Expected false: radius equals RADIUS1");
+    }
+
+
+
+
+
+
 
 
 
