@@ -337,5 +337,22 @@ public class LICTests {
     }
 
 
+    /**
+     * LIC13
+     * Test case with insufficient points (NUMPOINTS < 5)
+     */
+    @Test
+    public void test_condition13_InsufficientPoints() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3}; // 4 points (needs ≥5)
+        double[] yList = {0, 0, 0, 0};
+        double RADIUS1 = 1.0, RADIUS2 = 2.0;
+        int A_PTS = 1, B_PTS = 1;
+        boolean result = lic.condition13(xList, yList, RADIUS1, RADIUS2, A_PTS, B_PTS);
+        assertFalse(result, "Expected false: <5 points");
+    }
+
+
+
 }
 
