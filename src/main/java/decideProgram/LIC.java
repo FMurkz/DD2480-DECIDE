@@ -163,6 +163,18 @@ public class LIC {
         return true;
     }
 
+
+    /**
+     * Checks if at least one set of N_PTS consecutive points has a distance greater than DIST
+     * from the line joining the first and last points. If the first and last points are identical,
+     * the distance is calculated from the coincident point to the others.
+     * 
+     * @param xArray  Array of x coordinates.
+     * @param yArray  Array of y coordinates.
+     * @param npts    Number of consecutive points to check.
+     * @param dist    Distance threshold.
+     * @return        True if the condition is met, otherwise false.
+    */
     public boolean condition6(double[] xArray, double[] yArray, int npts, double dist) {
         if (xArray.length != yArray.length) {
             throw new IllegalArgumentException("xArray and yArray must have the same length");
