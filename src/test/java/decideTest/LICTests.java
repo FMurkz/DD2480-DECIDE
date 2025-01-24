@@ -447,11 +447,72 @@ public class LICTests {
         assertFalse(result, "Expected false: radius equals RADIUS1");
     }
 
+    /**
+     * LIC9
+     * Test case where the three chosen points form a clear valid angle outside [PI - epsilon, PI + epsilon]
+     */
+    @Test
+    public void test_condition9_ValidCase() {
+        LIC lic = new LIC();
+        double[] xList = {0, 2, 4, 6, 3}; // The last point bends inward
+        double[] yList = {0, 0, 0, 0, 3}; // Last point is lifted up, creating an angle
+        int numPoints = 5;
+        double epsilon = 0.5;
+        int cPts = 1, dPts = 1;
 
+        boolean result = lic.condition9(xList, yList, numPoints, epsilon, cPts, dPts);
+        assertTrue(result, "Expected true because the last point lifts up, creating an angle outside [PI - epsilon, PI + epsilon].");
+    }
 
+    /**
+     * LIC9
+     * Test case with too few points (numPoints < 5)
+     */
+    @Test
+    public void test_condition9_NotEnoughPoints() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3};  // Only 4 points
+        double[] yList = {0, 1, 2, 3};  
+        int numPoints = 4;
+        double epsilon = 0.5;
+        int cPts = 1, dPts = 1;
 
+        boolean result = lic.condition9(xList, yList, numPoints, epsilon, cPts, dPts);
+        assertFalse(result, "Expected false because there are fewer than 5 points.");
+    }
 
+    /**
+     * LIC9
+     * Test case where one of the points coincides with the vertex (angle undefined)
+     */
+    @Test
+    public void test_condition9_CoincidingPoints() {
+        LIC lic = new LIC();
+        double[] xList = {0, 0, 0, 1, 2}; // Middle point (vertex) coincides with first
+        double[] yList = {0, 0, 0, 0, 0}; 
+        int numPoints = 5;
+        double epsilon = 0.5;
+        int cPts = 1, dPts = 1;
 
+        boolean result = lic.condition9(xList, yList, numPoints, epsilon, cPts, dPts);
+        assertFalse(result, "Expected false because the angle is undefined due to coinciding points.");
+    }
+    /**
+     * LIC9
+     * Test case where CPTS is negative
+     */
+    @Test
+    public void test_condition9_NegativeCPTS_DPTS() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 4};
+        double[] yList = {0, 0, 0, 0, 0};
+        int numPoints = 5;
+        double epsilon = 0.5;
+        int cPts = -1, dPts = 1; // Invalid negative input
+    
+        boolean result = lic.condition9(xList, yList, numPoints, epsilon, cPts, dPts);
+        assertFalse(result, "Expected false because C_PTS is negative.");
+    }
 
 
 
