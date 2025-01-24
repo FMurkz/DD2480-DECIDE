@@ -626,5 +626,21 @@ public class LICTests {
         assertFalse(result, "Expected false because there are not enough points to form a valid triangle");
     }
 
+    /**
+     * LIC 10:
+     * Test case where there are zero data points
+     */
+    @Test
+    public void test_condition10_zero_datapoints() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{};
+        double[] yList = new double[]{}; 
+        int epts = 1; 
+        int fpts = 1;  
+        double area1 = 3.0;  
+        boolean result = lic.condition10(xList, yList, epts, fpts, area1);
+        assertFalse(result, "Expected false because there are not enough points to form a valid triangle");
+    }
+
 }
 
