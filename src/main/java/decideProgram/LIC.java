@@ -22,7 +22,7 @@ public class LIC {
         return false;
     }
 
-    public boolean condition1() {
+    public boolean condition1(double[] xArray, double[] yArray, double radius1) {
         return true;
     }
 
