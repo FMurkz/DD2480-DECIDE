@@ -206,9 +206,60 @@ public class LIC {
         return false;
     }
 
-    public boolean condition9() {
-        return true;
+    /**
+     * LIC9: There exists at least one set of three data points separated by exactly C_PTS and D_PTS consecutive intervening points, which form an angle. The second points of the set of three points is always the vertex of the angle. If either the first point or the last point (or both) coincide with the vertex,
+     * the angle is undefined and the LIC is not satisfied by those three points. 
+     * When NUMPOINTS < 5, the condition is not met.
+     * @param x
+     * @param y
+     * @param numPoints
+     * @param epsilon
+     * @param cPts
+     * @param dPts
+     * @return
+     */
+    public boolean condition9(double[] x, double[] y, int numPoints, double epsilon, int cPts, int dPts) {
+        if (numPoints < 5 || epsilon < 0 || epsilon >= Math.PI || cPts < 1 || dPts < 1 || (cPts + dPts > numPoints - 3)) {
+            return false; // Condition cannot be met if requirements aren't satisfied
+        }
+
+        for (int i = 0; i < numPoints - (cPts + dPts) - 2; i++) {
+            // Select three points with given separation
+            double x1 = x[i], y1 = y[i];
+            double x2 = x[i + cPts + 1], y2 = y[i + cPts + 1]; // Vertex
+            double x3 = x[i + cPts + dPts + 2], y3 = y[i + cPts + dPts + 2];
+
+            // Check if the first or last point coincides with the vertex
+            if ((x1 == x2 && y1 == y2) || (x3 == x2 && y3 == y2)) {
+                continue; // Skip this as the angle is undefined
+            }
+
+            // Compute vectors
+            double v1x = x1 - x2, v1y = y1 - y2; // Vector from vertex to first point
+            double v2x = x3 - x2, v2y = y3 - y2; // Vector from vertex to last point
+
+            // Compute the dot product
+            double dotProduct = v1x * v2x + v1y * v2y;
+
+            //the magnitudes of the vectors
+            double mag1 = Math.sqrt(v1x * v1x + v1y * v1y);
+            double mag2 = Math.sqrt(v2x * v2x + v2y * v2y);
+
+            if (mag1 == 0 || mag2 == 0) {
+                continue; // Skip if any vector has zero length
+            }
+
+            // Compute the angle using the cosine rule
+            double angle = Math.acos(dotProduct / (mag1 * mag2));
+
+            // Check if the angle falls outside the range [PI - EPSILON, PI + EPSILON]
+            if (angle < (Math.PI - epsilon) || angle > (Math.PI + epsilon)) {
+                return true; // Condition is met
+            }
+        }
+        return false;
     }
+
 
     public boolean condition10() {
         return true;
