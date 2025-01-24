@@ -642,5 +642,73 @@ public class LICTests {
         assertFalse(result, "Expected false because there are not enough points to form a valid triangle");
     }
 
+    /**
+     * LIC 14:
+     * Test case where the area of the triangle formed by three points separated by exactly E_PTS and F_PTS is greater than AREA1 while smaller than AREA2
+     */
+    @Test
+    public void test_condition14_Valid() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{0, 3, 0, 6, 9};  
+        double[] yList = new double[]{0, 0, 4, 0, 4};  
+        int epts = 1;  
+        int fpts = 1;
+        double area1 = 3.0; 
+        double area2 = 20.0;
+        boolean result = lic.condition14(xList, yList, epts, fpts, area1, area2);
+        assertTrue(result, "Expected true because one triangle's area is greater than AREA1 and another's is smaller than AREA2");
+    }
+
+    /**
+     * LIC 14:
+     * Test case where the area of the triangle formed by three points separated by exactly E_PTS and F_PTS is greater than AREA1 and AREA2
+     */
+    @Test
+    public void test_condition14_InValid() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{0, 3, 0, 6, 9};  
+        double[] yList = new double[]{0, 0, 4, 0, 4};  
+        int epts = 1;  
+        int fpts = 1;
+        double area1 = 3.0; 
+        double area2 = 3.0;
+        boolean result = lic.condition14(xList, yList, epts, fpts, area1, area2);
+        assertFalse(result, "Expected False because one triangle's area is greater than AREA1 and AREA2");
+    }
+
+    /**
+     * LIC 14:
+     * Test case where there are fewer than 5 data points
+     */
+    @Test
+    public void test_condition14_four_datapoints() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{0, 1, 2, 3};  
+        double[] yList = new double[]{0, 0, 0, 0};  
+        int epts = 1;  
+        int fpts = 1;  
+        double area1 = 3.0;  
+        double area2 = 2.0;  
+        boolean result = lic.condition14(xList, yList, epts, fpts, area1, area2);
+        assertFalse(result, "Expected false because there are not enough points to form a valid triangle");
+    }
+
+    /**
+     * LIC 14:
+     * Test case where there are zero data points
+     */
+    @Test
+    public void test_condition14_zero_datapoints() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{};  
+        double[] yList = new double[]{};  
+        int epts = 1;  
+        int fpts = 1;  
+        double area1 = 3.0;  
+        double area2 = 2.0;  
+        boolean result = lic.condition14(xList, yList, epts, fpts, area1, area2);
+        assertFalse(result, "Expected false because there are not enough points to form a valid triangle");
+    }
+
 }
 
