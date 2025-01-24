@@ -642,5 +642,22 @@ public class LICTests {
         assertFalse(result, "Expected false because there are not enough points to form a valid triangle");
     }
 
+    /**
+     * LIC 14:
+     * Test case where the area of the triangle formed by three points separated by exactly E_PTS and F_PTS is greater than AREA1
+     */
+    @Test
+    public void test_condition14_Valid() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{0, 3, 0, 6, 9};  
+        double[] yList = new double[]{0, 0, 4, 0, 4};  
+        int epts = 1;  
+        int fpts = 1;
+        double area1 = 3.0; 
+        double area2 = 20.0;
+        boolean result = lic.condition14(xList, yList, epts, fpts, area1, area2);
+        assertTrue(result, "Expected true because one triangle's area is greater than AREA1 and another's is smaller than AREA2");
+    }
+
 }
 
