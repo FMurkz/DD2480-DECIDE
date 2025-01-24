@@ -222,8 +222,49 @@ public class LIC {
         return true;
     }
 
-    public boolean condition13() {
-        return true;
+    public boolean condition13(double[] xArray, double[] yArray, double RADIUS1, double RADIUS2, int A_PTS, int B_PTS) {
+        
+        if (xArray.length != yArray.length) throw new IllegalArgumentException("xArray and yArray must have the same length");
+        if (RADIUS1 < 0 || RADIUS2 < 0) throw new IllegalArgumentException("RADIUS1 and RADIUS2 must be greater than or equal to 0");
+        if (A_PTS < 1 || B_PTS < 1) throw new IllegalArgumentException("A_PTS and B_PTS must be at least 1");
+
+        int numPoints = xArray.length;
+        if (numPoints < 5) return false;
+
+        boolean foundPartA = false;
+        boolean foundPartB = false;
+            
+       
+        for (int i = 0; i <= numPoints - (A_PTS + B_PTS + 3); i++) {
+            int j = i + A_PTS + 1;
+            int k = j + B_PTS + 1;
+
+            double[] p1 = {xArray[i], yArray[i]};
+            double[] p2 = {xArray[j], yArray[j]};
+            double[] p3 = {xArray[k], yArray[k]};
+
+       
+            double radius = minimalEnclosingCircleRadius(p1, p2, p3);
+
+            // Checking Part A: radius > RADIUS1 
+            if (radius > RADIUS1) {
+                foundPartA = true;
+            }
+
+            // Checking Part B: radius ≤ RADIUS2 
+            if (radius <= RADIUS2) {
+                foundPartB = true;
+            }
+
+            
+            if (foundPartA && foundPartB) {
+                break;
+            }
+        }
+
+        
+        return foundPartA && foundPartB;
+    
     }
 
     public boolean condition14() {

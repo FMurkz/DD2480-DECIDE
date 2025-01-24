@@ -300,6 +300,91 @@ public class LICTests {
         assertFalse(result, "Expected false because the angle is undefined due to coinciding points.");
     }
 
+
+
+    /**
+     * LIC13
+     * Test case where both conditions are met:
+     * 1. At least one triplet has radius > RADIUS1.
+     * 2. At least one triplet has radius ≤ RADIUS2.
+     */
+    @Test
+    public void test_condition13_Valid() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 10, 1, 2};
+        double[] yList = {0, 0, 0, 0, 0, 0, 0};
+        double RADIUS1 = 1.0; // Part A: 1.5 > 1.0 
+        double RADIUS2 = 2.0; // Part B: 1.5 ≤ 2.0 
+        int A_PTS = 2, B_PTS = 2;
+        boolean result = lic.condition13(xList, yList, RADIUS1, RADIUS2, A_PTS, B_PTS);
+        assertTrue(result, "Expected true: both conditions met");
+    }
+
+
+    /**
+     * LIC13
+     * Test case where Part A fails (no triplet > RADIUS1)
+     */
+    @Test
+    public void test_condition13_InvalidPartA() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 4}; 
+        double[] yList = {0, 0, 0, 0, 0};
+        double RADIUS1 = 3.0; // Part A fails
+        double RADIUS2 = 1.0; // Part B passes 
+        int A_PTS = 1, B_PTS = 1;
+        boolean result = lic.condition13(xList, yList, RADIUS1, RADIUS2, A_PTS, B_PTS);
+        assertFalse(result, "Expected false: Part A fails");
+    }
+
+    /**
+     * LIC13
+     * Test case where Part B fails (no triplet ≤ RADIUS2)
+     */
+    @Test
+    public void test_condition13_InvalidPartB() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 6}; 
+        double[] yList = {0, 0, 0, 0, 0};
+        double RADIUS1 = 2.0; // Part A passes 
+        double RADIUS2 = 2.5; // Part B fails 
+        int A_PTS = 1, B_PTS = 1;
+        boolean result = lic.condition13(xList, yList, RADIUS1, RADIUS2, A_PTS, B_PTS);
+        assertFalse(result, "Expected false: Part B fails");
+    }
+
+    /**
+     * LIC13
+     * Test case with insufficient points (NUMPOINTS < 5)
+     */
+    @Test
+    public void test_condition13_InsufficientPoints() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3}; // 4 points (needs ≥5)
+        double[] yList = {0, 0, 0, 0};
+        double RADIUS1 = 1.0, RADIUS2 = 2.0;
+        int A_PTS = 1, B_PTS = 1;
+        boolean result = lic.condition13(xList, yList, RADIUS1, RADIUS2, A_PTS, B_PTS);
+        assertFalse(result, "Expected false: <5 points");
+    }
+
+
+    /**
+     * LIC13
+     * Test case with coinciding points (radius = 0)
+     */
+    @Test
+    public void test_condition13_CoincidentPoints() {
+        LIC lic = new LIC();
+        double[] xList = {5, 1, 5, 1, 5}; // Triplet 0-2-4: all points (5,0)
+        double[] yList = {0, 0, 0, 0, 0};
+        double RADIUS1 = 0.0; // Part A: 0.0 > 0.0 
+        double RADIUS2 = 0.0; // Part B: 0.0 ≤ 0.0 
+        int A_PTS = 1, B_PTS = 1;
+        boolean result = lic.condition13(xList, yList, RADIUS1, RADIUS2, A_PTS, B_PTS);
+        assertFalse(result, "Expected false: Part A fails (radius 0)");
+    }
+
     /**
      * LIC8
      * Test case where three spaced points form a circle with radius > RADIUS1
@@ -361,6 +446,7 @@ public class LICTests {
         boolean result = lic.condition8(xList, yList, RADIUS1, A_PTS, B_PTS);
         assertFalse(result, "Expected false: radius equals RADIUS1");
     }
+
 
 
 
