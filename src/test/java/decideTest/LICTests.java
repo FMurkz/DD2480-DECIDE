@@ -353,6 +353,23 @@ public class LICTests {
     }
 
 
+    /**
+     * LIC13
+     * Test case with coinciding points (radius = 0)
+     */
+    @Test
+    public void test_condition13_CoincidentPoints() {
+        LIC lic = new LIC();
+        double[] xList = {5, 1, 5, 1, 5}; // Triplet 0-2-4: all points (5,0)
+        double[] yList = {0, 0, 0, 0, 0};
+        double RADIUS1 = 0.0; // Part A: 0.0 > 0.0 ❌
+        double RADIUS2 = 0.0; // Part B: 0.0 ≤ 0.0 ✔️
+        int A_PTS = 1, B_PTS = 1;
+        boolean result = lic.condition13(xList, yList, RADIUS1, RADIUS2, A_PTS, B_PTS);
+        assertFalse(result, "Expected false: Part A fails (radius 0)");
+    }
+
+
 
 }
 
