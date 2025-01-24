@@ -577,5 +577,21 @@ public class LICTests {
         boolean result = lic.condition4(xList, yList, numPoints, qPts, quads);
         assertTrue(result, "Expected true because the points cross multiple quadrants (III -> I).");
     }
+
+    /**
+     * LIC 10:
+     * Test case where the area of the triangle formed by three points separated by exactly E_PTS and F_PTS is greater than AREA1
+     */
+    @Test
+    public void test_condition10_Valid() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{0, 3, 0, 6, 9}; 
+        double[] yList = new double[]{0, 0, 4, 0, 4};
+        int epts = 1;  
+        int fpts = 1;
+        double area1 = 3.0;
+        boolean result = lic.condition10(xList, yList, epts, fpts, area1);
+        assertTrue(result, "Expected true because the area of the triangle formed by the points is greater than AREA1");
+    }
 }
 
