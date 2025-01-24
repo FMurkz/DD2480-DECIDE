@@ -283,5 +283,21 @@ public class LICTests {
         boolean result = lic.condition2(xList, yList, numPoints, epsilon);
         assertTrue(result, "Expected true because the angle is greater than PI + EPSILON.");
     }
+
+    /**
+     * LIC2
+     * Test case where one of the points coincides with the vertex
+     */
+    @Test
+    public void test_condition2_CoincidingPoints() {
+        LIC lic = new LIC();
+        double[] xList = {0, 0, 0}; // All points at the same location
+        double[] yList = {0, 0, 0}; 
+        int numPoints = 3;
+        double epsilon = 0.5;
+
+        boolean result = lic.condition2(xList, yList, numPoints, epsilon);
+        assertFalse(result, "Expected false because the angle is undefined due to coinciding points.");
+    }
 }
 
