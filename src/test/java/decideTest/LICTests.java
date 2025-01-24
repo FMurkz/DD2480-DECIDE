@@ -268,6 +268,20 @@ public class LICTests {
         boolean result = lic.condition2(xList, yList, numPoints, epsilon);
         assertTrue(result, "Expected true because the angle is less than PI - EPSILON.");
     }
+    /**
+     * LIC2
+     * Test case where the angle is > PI + EPSILON
+     */
+    @Test
+    public void test_condition2_AngleMoreThan() {
+        LIC lic = new LIC();
+        double[] xList = {0, -1, 1}; // Almost straight line, obtuse angle
+        double[] yList = {0, 0, 0};  
+        int numPoints = 3;
+        double epsilon = 0.1; // Slightly above PI
 
+        boolean result = lic.condition2(xList, yList, numPoints, epsilon);
+        assertTrue(result, "Expected true because the angle is greater than PI + EPSILON.");
+    }
 }
 
