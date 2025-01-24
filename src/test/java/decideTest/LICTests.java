@@ -77,4 +77,20 @@ public class LICTests {
     }
 
 
+    /**
+     * LIC1
+     * Test case where all three-point circles have radius ≤ RADIUS1
+     */
+    @Test
+    public void test_condition1_Invalid() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 0.5}; // Smaller equilateral triangle
+        double[] yList = {0, 0, Math.sqrt(3)/2}; // Circumradius ≈ 0.577
+        double RADIUS1 = 1.0;
+        boolean result = lic.condition1(xList, yList, RADIUS1);
+        assertFalse(result, "Expected false: all circles fit within RADIUS1");
+    }
+
+
+
 }
