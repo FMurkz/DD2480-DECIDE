@@ -93,4 +93,20 @@ public class LICTests {
         assertFalse(result, "Expected false because there doesn't exists one set of two data points separated by exactly KPTS consecutive intervening points that are a distance greater than the length1");
     }
 
+    /**
+     * LIC 7:
+     * Test case where there are less than 3 data points
+     */
+    @Test
+    public void test_condition7_Less_than_3_datapoints() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{0, 1};
+        double[] yList = new double[]{0, 1};
+        int numPoints = 2;
+        int kPts = 1;
+        int length1 = 1;
+        boolean result = lic.condition7(xList, yList, numPoints, kPts, length1);
+        assertFalse(result, "Expected false because there are less than 3 data points");
+    }
+
 }
