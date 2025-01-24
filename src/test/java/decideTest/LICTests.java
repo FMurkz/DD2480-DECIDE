@@ -252,5 +252,22 @@ public class LICTests {
         boolean result = lic.condition2(xList, yList, numPoints, epsilon);
         assertFalse(result, "Expected false because there are fewer than 3 points.");
     }
+
+    /**
+     * LIC2
+     * Test case where the angle is < PI - EPSILON
+     */
+    @Test
+    public void test_condition2_AngleLessThan() {
+        LIC lic = new LIC();
+        double[] xList = {0, 0, 1}; // Right turn, sharp angle
+        double[] yList = {0, 1, 0}; 
+        int numPoints = 3;
+        double epsilon = 0.5; // PI - 0.5 should be a relatively large angle
+        
+        boolean result = lic.condition2(xList, yList, numPoints, epsilon);
+        assertTrue(result, "Expected true because the angle is less than PI - EPSILON.");
+    }
+
 }
 
