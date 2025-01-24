@@ -22,7 +22,7 @@ public class LIC {
         return true;
     }
 
-    public boolean condition5() {
+    public boolean condition5(double[] X, double[] Y) {
         return true;
     }
 
