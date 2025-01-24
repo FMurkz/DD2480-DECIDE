@@ -497,8 +497,22 @@ public class LICTests {
         boolean result = lic.condition9(xList, yList, numPoints, epsilon, cPts, dPts);
         assertFalse(result, "Expected false because the angle is undefined due to coinciding points.");
     }
-
-
+    /**
+     * LIC9
+     * Test case where CPTS is negative
+     */
+    @Test
+    public void test_condition9_NegativeCPTS_DPTS() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 4};
+        double[] yList = {0, 0, 0, 0, 0};
+        int numPoints = 5;
+        double epsilon = 0.5;
+        int cPts = -1, dPts = 1; // Invalid negative input
+    
+        boolean result = lic.condition9(xList, yList, numPoints, epsilon, cPts, dPts);
+        assertFalse(result, "Expected false because C_PTS is negative.");
+    }
 
 
 
