@@ -40,6 +40,14 @@ public class LIC {
     }
     
     
+     public static double perpendicularDistance(double x1, double y1, double x2, double y2, double x0, double y0) {
+        double A = y2 - y1;
+        double B = -(x2 - x1);
+        double C = (x2 * y1) - (x1 * y2);
+
+        return Math.abs(A * x0 + B * y0 + C) / Math.sqrt(A * A + B * B);
+    }
+
 
     /**
      * LIC 0: There exists at least one set of two 
