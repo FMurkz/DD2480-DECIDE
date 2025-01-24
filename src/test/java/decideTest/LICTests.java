@@ -529,7 +529,22 @@ public class LICTests {
         boolean result = lic.condition4(xList, yList, numPoints, qPts, quads);
         assertFalse(result, "Expected false because there are fewer than qPts points.");
     }
+    /**
+     * LIC4
+     * Test case where all points are on the origin (0,0)
+     */
+    @Test
+    public void test_condition4_AllPointsOrigin() {
+        LIC lic = new LIC();
+        double[] xList = {0, 0, 0};  
+        double[] yList = {0, 0, 0};  
+        int numPoints = 3;
+        int qPts = 3;
+        int quads = 1;
 
+        boolean result = lic.condition4(xList, yList, numPoints, qPts, quads);
+        assertFalse(result, "Expected false because all points are in the same location (quadrant I).");
+    }
 
 }
 
