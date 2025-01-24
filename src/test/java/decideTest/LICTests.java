@@ -61,4 +61,32 @@ public class LICTests {
         assertFalse(result, "Expected false because there is only one data point");
     }
 
+    /**
+    * LIC3
+     * Test case where the area of the triangle formed by three points is greater than AREA1
+    */
+    @Test
+    public void test_condition3_Valid() {
+        LIC lic = new LIC();
+    
+        double[] xList = new double[]{0, 3, 0}; 
+        double[] yList = new double[]{0, 0, 4};  
+    
+        double area1 = 3.0; 
+    
+        boolean result = lic.condition3(xList, yList, area1);
+    
+        assertTrue(result, "Expected true because the area of the triangle formed by the points is greater than AREA1");
+    }
+
+    @Test
+    public void test_condition3_InValid() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{0, 1, 0};
+        double[] yList = new double[]{0, 0, 1};
+        double area1 = 1.0;
+        boolean result = lic.condition3(xList, yList, area1);
+        assertFalse(result, "Expected false because the area of the triangle formed by the points is less than or equal to AREA1");
+    }
+
 }
