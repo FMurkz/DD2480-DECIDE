@@ -299,5 +299,25 @@ public class LICTests {
         boolean result = lic.condition2(xList, yList, numPoints, epsilon);
         assertFalse(result, "Expected false because the angle is undefined due to coinciding points.");
     }
+
+
+    /**
+     * LIC13
+     * Test case where both conditions are met:
+     * 1. At least one triplet has radius > RADIUS1.
+     * 2. At least one triplet has radius ≤ RADIUS2.
+     */
+    @Test
+    public void test_condition13_Valid() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 10, 1, 2}; // Triplet 0-3-6 (radius 5.0) and 1-4-5 (radius 0.0)
+        double[] yList = {0, 0, 0, 0, 0, 0, 0};
+        double RADIUS1 = 4.0; // Part A: 5.0 > 4.0 ✔️
+        double RADIUS2 = 0.5; // Part B: 0.0 ≤ 0.5 ✔️
+        int A_PTS = 2, B_PTS = 2;
+        boolean result = lic.condition13(xList, yList, RADIUS1, RADIUS2, A_PTS, B_PTS);
+        assertTrue(result, "Expected true: both conditions met");
+    }
+
 }
 
