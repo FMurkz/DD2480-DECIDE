@@ -163,9 +163,43 @@ public class LIC {
         return true;
     }
 
-    public boolean condition6() {
-        return true;
+    public boolean condition6(double[] xArray, double[] yArray, int npts, double dist) {
+        if (xArray.length != yArray.length) {
+            throw new IllegalArgumentException("xArray and yArray must have the same length");
+        }
+        int numPoints = xArray.length;
+    
+        if (npts < 3 || numPoints < 3 || npts > xArray.length) {
+            return false;
+        }
+    
+        if (dist < 0) {
+            throw new IllegalArgumentException("DIST cannot be negative");
+        }      
+    
+        for (int i = 0; i <= numPoints - npts; i++) {
+            double[] npts_xPoints = new double[npts];
+            double[] npts_yPoints = new double[npts];
+    
+            System.arraycopy(xArray, i, npts_xPoints, 0, npts);
+            System.arraycopy(yArray, i, npts_yPoints, 0, npts);
+    
+            double firstPoint_x = npts_xPoints[0], firstPoint_y = npts_yPoints[0];
+            double lastPoint_x = npts_xPoints[npts - 1], lastPoint_y = npts_yPoints[npts - 1];
+    
+            for (int j = 1; j < npts - 1; j++) {
+                double currentPoint_x = npts_xPoints[j], currentPoint_y = npts_yPoints[j];
+                double distance = perpendicularDistance(firstPoint_x, firstPoint_y, lastPoint_x, lastPoint_y, currentPoint_x, currentPoint_y);
+    
+                if (distance > dist) {
+                    return true;
+                }
+            }
+        }
+    
+        return false;
     }
+    
 
     /**
      * LIC 7: 
