@@ -61,4 +61,20 @@ public class LICTests {
         assertFalse(result, "Expected false because there is only one data point");
     }
 
+
+    /**
+     * LIC1
+     * Test case where three consecutive points form a circle with radius > RADIUS1
+     */
+    @Test
+    public void test_condition1_Valid() {
+        LIC lic = new LIC();
+        double[] xList = {0, 2, 1}; // Equilateral triangle (side length 2)
+        double[] yList = {0, 0, Math.sqrt(3)}; // Circumradius ≈ 1.1547
+        double RADIUS1 = 1.0;
+        boolean result = lic.condition1(xList, yList, RADIUS1);
+        assertTrue(result, "Expected true: circle radius exceeds RADIUS1");
+    }
+
+
 }
