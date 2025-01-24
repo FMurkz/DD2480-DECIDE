@@ -331,9 +331,26 @@ public class LIC {
         return false;  
     }
 
-    public boolean condition11() {
-        return true;
+    public boolean condition11(double[] xArray, double[] yArray, int gPts) {
+        if (xArray.length != yArray.length) {
+            throw new IllegalArgumentException("xArray and yArray must have the same length");
+        }
+        int numPoints = xArray.length;
+    
+        if (gPts < 1 || gPts > numPoints - 2) {
+            return false;
+        }
+        for (int i = 0; i < numPoints - gPts - 1; i++) {
+            
+            int j = i + gPts + 1;
+            if (xArray[j] < xArray[i]) {
+                return true; 
+            }
+        }
+    
+        return false; 
     }
+    
 
     public boolean condition12() {
         return true;
