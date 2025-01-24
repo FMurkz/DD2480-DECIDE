@@ -481,6 +481,22 @@ public class LICTests {
         assertFalse(result, "Expected false because there are fewer than 5 points.");
     }
 
+    /**
+     * LIC9
+     * Test case where one of the points coincides with the vertex (angle undefined)
+     */
+    @Test
+    public void test_condition9_CoincidingPoints() {
+        LIC lic = new LIC();
+        double[] xList = {0, 0, 0, 1, 2}; // Middle point (vertex) coincides with first
+        double[] yList = {0, 0, 0, 0, 0}; 
+        int numPoints = 5;
+        double epsilon = 0.5;
+        int cPts = 1, dPts = 1;
+
+        boolean result = lic.condition9(xList, yList, numPoints, epsilon, cPts, dPts);
+        assertFalse(result, "Expected false because the angle is undefined due to coinciding points.");
+    }
 
 
 
