@@ -78,7 +78,11 @@ public class LICTests {
     
         assertTrue(result, "Expected true because the area of the triangle formed by the points is greater than AREA1");
     }
-
+    
+    /**
+    * LIC3
+     * Test case where the area of the triangle formed by three points is smaller than AREA1
+    */
     @Test
     public void test_condition3_InValid() {
         LIC lic = new LIC();
@@ -88,5 +92,6 @@ public class LICTests {
         boolean result = lic.condition3(xList, yList, area1);
         assertFalse(result, "Expected false because the area of the triangle formed by the points is less than or equal to AREA1");
     }
+
 
 }
