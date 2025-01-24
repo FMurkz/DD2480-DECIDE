@@ -107,5 +107,22 @@ public class LICTests {
     }
 
 
+    /**
+     * LIC1
+     * Test case with exactly 3 points and radius = RADIUS1
+     */
+    @Test
+    public void test_condition1_ExactRadius() {
+        LIC lic = new LIC();
+        double[] xList = {0, 2, 4}; // Collinear points
+        double[] yList = {0, 0, 0};
+        double RADIUS1 = 2.0; // Exactly matches required radius
+        boolean result = lic.condition1(xList, yList, RADIUS1);
+        assertFalse(result, "Expected false: radius equals RADIUS1");
+    }
+
+
+
+
 
 }
