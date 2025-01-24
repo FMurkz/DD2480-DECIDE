@@ -143,9 +143,58 @@ public class LIC {
         return false;
     }
 
-    public boolean condition4() {
-        return true;
+/**
+     * LIC4: There exists at least one set of Q PTS consecutive data points that lie in more than QUADS quadrants. Where there is ambiguity as to which quadrant contains a given point, 
+     * priority of decision will be by quadrant number, i.e., I, II, III, IV. For example, the data point (0,0) is in quadrant I, the point (-l,0) is in quadrant II, the point (0,-l) is in quadrant III, the point 
+     * (0,1) is in quadrant I and the point (1,0) is in quadrant I.
+     * @param x
+     * @param y
+     * @param numPoints
+     * @param qPts
+     * @param quads
+     * @return
+     */
+    public boolean condition4(double[] x, double[] y, int numPoints, int qPts, int quads) {
+        if (numPoints < qPts || qPts < 2 || quads < 1 || quads > 3) {
+            return false; // Condition cannot be met if constraints are violated. Check if qPts is within valid bounds
+        }
+
+        // Iterate over all possible sets of Q_PTS consecutive points
+        for (int i = 0; i <= numPoints - qPts; i++) {
+            boolean[] quadrantVisited = new boolean[4]; // Boolean array to track quadrants
+            int uniqueQuadrants = 0;
+
+            // Check the quadrant of each point in this subset
+            for (int j = i; j < i + qPts; j++) {
+                int quadrant = getQuadrant(x[j], y[j]);
+
+                if (!quadrantVisited[quadrant - 1]) { // If this quadrant hasn't been visited yet
+                    quadrantVisited[quadrant - 1] = true;
+                    uniqueQuadrants++;
+                }
+
+                // If the number of unique quadrants exceeds QUADS, return true
+                if (uniqueQuadrants > quads) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
+    /**
+     * Helperfunction for condition4 that checks which quadrant each point in the set of Q is in
+     * @param x
+     * @param y
+     * @return
+     */
+    private int getQuadrant(double x, double y) {
+        if (x >= 0 && y > 0) return 1;  // Quadrant I
+        if (x < 0 && y >= 0) return 2;  // Quadrant II
+        if (x <= 0 && y < 0) return 3;  // Quadrant III
+        if (x > 0 && y <= 0) return 4;  // Quadrant IV
+        return 1; // Default case, (0,0) as Quadrant I
+    }
+
 
     public boolean condition5() {
         return true;
