@@ -236,5 +236,68 @@ public class LICTests {
         int length1 = 1;
         assertThrows(IllegalArgumentException.class, () -> lic.condition7(xList, yList, numPoints, kPts, length1), "Expected IllegalArgumentException because KPTS is less than 1");
     }
+
+    /**
+     * LIC2
+     * Test case with too few points
+     */
+    @Test
+    public void test_condition2_NotEnoughPoints() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1};
+        double[] yList = {0, 1};
+        int numPoints = 2;
+        double epsilon = 0.5;
+
+        boolean result = lic.condition2(xList, yList, numPoints, epsilon);
+        assertFalse(result, "Expected false because there are fewer than 3 points.");
+    }
+
+    /**
+     * LIC2
+     * Test case where the angle is < PI - EPSILON
+     */
+    @Test
+    public void test_condition2_AngleLessThan() {
+        LIC lic = new LIC();
+        double[] xList = {0, 0, 1}; // Right turn, sharp angle
+        double[] yList = {0, 1, 0}; 
+        int numPoints = 3;
+        double epsilon = 0.5; // PI - 0.5 should be a relatively large angle
+        
+        boolean result = lic.condition2(xList, yList, numPoints, epsilon);
+        assertTrue(result, "Expected true because the angle is less than PI - EPSILON.");
+    }
+    /**
+     * LIC2
+     * Test case where the angle is > PI + EPSILON
+     */
+    @Test
+    public void test_condition2_AngleMoreThan() {
+        LIC lic = new LIC();
+        double[] xList = {0, -1, 1}; // Almost straight line, obtuse angle
+        double[] yList = {0, 0, 0};  
+        int numPoints = 3;
+        double epsilon = 0.1; // Slightly above PI
+
+        boolean result = lic.condition2(xList, yList, numPoints, epsilon);
+        assertTrue(result, "Expected true because the angle is greater than PI + EPSILON.");
+    }
+
+    /**
+     * LIC2
+     * Test case where one of the points coincides with the vertex
+     */
+    @Test
+    public void test_condition2_CoincidingPoints() {
+        LIC lic = new LIC();
+        double[] xList = {0, 0, 0}; // All points at the same location
+        double[] yList = {0, 0, 0}; 
+        int numPoints = 3;
+        double epsilon = 0.5;
+
+        boolean result = lic.condition2(xList, yList, numPoints, epsilon);
+        assertFalse(result, "Expected false because the angle is undefined due to coinciding points.");
+    }
 }
 
