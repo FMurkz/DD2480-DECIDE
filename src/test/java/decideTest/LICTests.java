@@ -513,8 +513,69 @@ public class LICTests {
         boolean result = lic.condition9(xList, yList, numPoints, epsilon, cPts, dPts);
         assertFalse(result, "Expected false because C_PTS is negative.");
     }
+    /**
+     * LIC4
+     * Test case where there are not enough points (numPoints < qPts)
+     */
+    @Test
+    public void test_condition4_NotEnoughPoints() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1};  
+        double[] yList = {0, 1};  
+        int numPoints = 2;
+        int qPts = 3;
+        int quads = 2;
 
+        boolean result = lic.condition4(xList, yList, numPoints, qPts, quads);
+        assertFalse(result, "Expected false because there are fewer than qPts points.");
+    }
+    /**
+     * LIC4
+     * Test case where all points are on the origin (0,0)
+     */
+    @Test
+    public void test_condition4_AllPointsOrigin() {
+        LIC lic = new LIC();
+        double[] xList = {0, 0, 0};  
+        double[] yList = {0, 0, 0};  
+        int numPoints = 3;
+        int qPts = 3;
+        int quads = 1;
 
+        boolean result = lic.condition4(xList, yList, numPoints, qPts, quads);
+        assertFalse(result, "Expected false because all points are in the same location (quadrant I).");
+    }
+    /**
+     * LIC4
+     * Test case where all points are on the x-axis
+     */
+    @Test
+    public void test_condition4_AllOnXAxis() {
+        LIC lic = new LIC();
+        double[] xList = {-2, -1, 0, 1, 2};  // Moves from Quadrant II -> I
+        double[] yList = {0, 0, 0, 0, 0};  
+        int numPoints = 5;
+        int qPts = 5;
+        int quads = 1;
 
+        boolean result = lic.condition4(xList, yList, numPoints, qPts, quads);
+        assertTrue(result, "Expected true because the points cross multiple quadrants (II -> I).");
+    }
+    /**
+     * LIC4
+     * Test case where all points are on the y-axis
+     */
+    @Test
+    public void test_condition4_AllOnYAxis() {
+        LIC lic = new LIC();
+        double[] xList = {0, 0, 0, 0, 0};  // Stays on the y-axis
+        double[] yList = {-2, -1, 0, 1, 2};  // Moves from Quadrant III -> I
+        int numPoints = 5;
+        int qPts = 5;
+        int quads = 1;
+
+        boolean result = lic.condition4(xList, yList, numPoints, qPts, quads);
+        assertTrue(result, "Expected true because the points cross multiple quadrants (III -> I).");
+    }
 }
 
