@@ -316,6 +316,23 @@ public class LICTests {
     }
 
 
+    /**
+     * LIC8
+     * Test case where all triplets fit within RADIUS1
+     */
+    @Test
+    public void test_condition8_Invalid() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 4}; // Points 0, 2, 4 (A_PTS=1, B_PTS=1)
+        double[] yList = {0, 0, 0, 0, 0};
+        double RADIUS1 = 3.0; // Distance between 0 and 4 is 4 → radius = 2.0
+        int A_PTS = 1, B_PTS = 1;
+        boolean result = lic.condition8(xList, yList, RADIUS1, A_PTS, B_PTS);
+        assertFalse(result, "Expected false: radius 2.0 ≤ RADIUS1 3.0");
+    }
+
+
+
 
 
 }
