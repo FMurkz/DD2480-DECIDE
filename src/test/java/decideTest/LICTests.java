@@ -109,4 +109,19 @@ public class LICTests {
         assertFalse(result, "Expected false because there are less than 3 data points");
     }
 
+    /**
+     * LIC 7:
+     * Test case where KPTS is less than 1
+     */
+    @Test
+    public void test_condition7_KPTS_less_than_1() {
+        LIC lic = new LIC();
+        double[] xList = new double[]{0, 1, 2};
+        double[] yList = new double[]{0, 1, 2};
+        int numPoints = 3;
+        int kPts = 0;
+        int length1 = 1;
+        assertThrows(IllegalArgumentException.class, () -> lic.condition7(xList, yList, numPoints, kPts, length1), "Expected IllegalArgumentException because KPTS is less than 1");
+    }
+
 }
