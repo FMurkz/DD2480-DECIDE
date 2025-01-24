@@ -513,7 +513,22 @@ public class LICTests {
         boolean result = lic.condition9(xList, yList, numPoints, epsilon, cPts, dPts);
         assertFalse(result, "Expected false because C_PTS is negative.");
     }
+    /**
+     * LIC4
+     * Test case where there are not enough points (numPoints < qPts)
+     */
+    @Test
+    public void test_condition4_NotEnoughPoints() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1};  
+        double[] yList = {0, 1};  
+        int numPoints = 2;
+        int qPts = 3;
+        int quads = 2;
 
+        boolean result = lic.condition4(xList, yList, numPoints, qPts, quads);
+        assertFalse(result, "Expected false because there are fewer than qPts points.");
+    }
 
 
 }
