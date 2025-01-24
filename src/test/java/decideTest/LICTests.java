@@ -109,6 +109,21 @@
          assertFalse(result, "Expected false because there are no data points to form a triangle");
         }
 
+        /**
+         * LIC3
+         * Test case where there are 2 data points
+        */
+        @Test
+        public void test_condition3_Two_datapoints() {
+            LIC lic = new LIC();
+            double[] xList = new double[]{0, 1};  // Less than three points
+            double[] yList = new double[]{0, 1};
+            double area1 = 1.0;
+    
+            boolean result = lic.condition3(xList, yList, area1);
+    
+            assertFalse(result, "Expected false because there are fewer than three data points to form a triangle");
+       }
         
 
     }
