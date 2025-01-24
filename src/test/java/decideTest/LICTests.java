@@ -464,6 +464,22 @@ public class LICTests {
         assertTrue(result, "Expected true because the last point lifts up, creating an angle outside [PI - epsilon, PI + epsilon].");
     }
 
+    /**
+     * LIC9
+     * Test case with too few points (numPoints < 5)
+     */
+    @Test
+    public void test_condition9_NotEnoughPoints() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3};  // Only 4 points
+        double[] yList = {0, 1, 2, 3};  
+        int numPoints = 4;
+        double epsilon = 0.5;
+        int cPts = 1, dPts = 1;
+
+        boolean result = lic.condition9(xList, yList, numPoints, epsilon, cPts, dPts);
+        assertFalse(result, "Expected false because there are fewer than 5 points.");
+    }
 
 
 
