@@ -40,6 +40,10 @@ public class LIC {
     }
     
     
+    /**
+      * Calculates the perpendicular distance from a point (x0, y0) 
+      * to the line formed by two points (x1, y1) and (x2, y2).
+    */
      public static double perpendicularDistance(double x1, double y1, double x2, double y2, double x0, double y0) {
         double A = y2 - y1;
         double B = -(x2 - x1);
