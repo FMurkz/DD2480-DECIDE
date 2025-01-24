@@ -383,8 +383,39 @@ public class LIC {
         return foundPartA && foundPartB;
     
     }
-
-    public boolean condition14() {
-        return true;
+        
+    /**
+     * LIC 14:
+     * There exists at least one set of three data points, separated by exactly 
+     * E_PTS and F_PTS consecutive intervening points, respectively, 
+     * that are the vertices of a triangle with area greater than AREA1.
+     * Additionally, there exists at least one set of three data points 
+     * (which can be the same or different) that form a triangle with area less than AREA2.
+     * The condition is not met when NUMPOINTS < 5.
+     */
+    public boolean condition14(double[] x, double[] y, int epts, int fpts, double area1, double area2) {
+        if (x.length < 5) return false;  
+        boolean cond1 = false;  
+        boolean cond2 = false;  
+        for (int i = 0; i < x.length - epts - fpts - 2; i++) {
+            double area = Math.abs(x[i] * (y[i + epts + 1] - y[i + epts + fpts + 2]) + 
+                                x[i + epts + 1] * (y[i + epts + fpts + 2] - y[i]) + 
+                                x[i + epts + fpts + 2] * (y[i] - y[i + epts + 1])) / 2;
+            if (area > area1) {
+                cond1 = true;  
+                break;  
+            }
+        }
+        for (int i = 0; i < x.length - epts - fpts - 2; i++) {
+            double area = Math.abs(x[i] * (y[i + epts + 1] - y[i + epts + fpts + 2]) + 
+                                x[i + epts + 1] * (y[i + epts + fpts + 2] - y[i]) + 
+                                x[i + epts + fpts + 2] * (y[i] - y[i + epts + 1])) / 2;
+            if (area < area2) {
+                cond2 = true;  
+                break;  
+            }
+        }
+        return cond1 && cond2;
     }
+
 }
