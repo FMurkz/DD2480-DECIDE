@@ -40,6 +40,18 @@ public class LIC {
     }
     
     
+    /**
+      * Calculates the perpendicular distance from a point (x0, y0) 
+      * to the line formed by two points (x1, y1) and (x2, y2).
+    */
+     public static double perpendicularDistance(double x1, double y1, double x2, double y2, double x0, double y0) {
+        double A = y2 - y1;
+        double B = -(x2 - x1);
+        double C = (x2 * y1) - (x1 * y2);
+
+        return Math.abs(A * x0 + B * y0 + C) / Math.sqrt(A * A + B * B);
+    }
+
 
     /**
      * LIC 0: There exists at least one set of two 
@@ -83,9 +95,55 @@ public class LIC {
       
     }
 
-    public boolean condition2() {
-        return true;
-    }
+    /**
+     * LIC2: There exists at least one set of three consecutive data points which form an angle such that the angle is either smaller than pi-epsilon or larger than pi + epsilon
+     * @param x
+     * @param y
+     * @param numPoints
+     * @param epsilon
+     * @return True if LIC2 is satisfied, false otherwise
+     */
+    public boolean condition2(double[] x, double[] y, int numPoints, double epsilon) {
+        if (numPoints < 3 || epsilon < 0 || epsilon >= Math.PI) {
+            return false; } // Condition cant be met if we have fewer than 3 points
+            for (int i = 0; i < numPoints - 2; i++) {
+                // Extract three consecutive points
+                double x1 = x[i], y1 = y[i];
+                double x2 = x[i + 1], y2 = y[i + 1]; // Vertex
+                double x3 = x[i + 2], y3 = y[i + 2];
+    
+                // Check if the first or last point coincides with the vertex
+                if ((x1 == x2 && y1 == y2) || (x3 == x2 && y3 == y2)) {
+                    continue; // Skip this set as the angle is undefined
+                }
+    
+                //vectors
+                double v1x = x1 - x2, v1y = y1 - y2; // Vector from vertex to first point
+                double v2x = x3 - x2, v2y = y3 - y2; // Vector from vertex to last point
+    
+                //dot product
+                double dotProduct = v1x * v2x + v1y * v2y;
+    
+                //the magnitudes of the vectors
+                double mag1 = Math.sqrt(v1x * v1x + v1y * v1y);
+                double mag2 = Math.sqrt(v2x * v2x + v2y * v2y);
+    
+                if (mag1 == 0 || mag2 == 0) {
+                    continue; // Skip if any vector has zero length
+                }
+    
+                // Compute the angle using the cosine rule
+                double angle = Math.acos(dotProduct / (mag1 * mag2));
+    
+                // Check if the angle falls outside the range [PI - EPSILON, PI + EPSILON]
+                if (angle < (Math.PI - epsilon) || angle > (Math.PI + epsilon)) {
+                    return true; // Condition is met
+                }
+            }
+    
+            return false;
+        }
+    
 
     public boolean condition3(double[] x, double[] y, double area1) {
         for (int i = 0; i < x.length - 2; i++) {
@@ -97,17 +155,133 @@ public class LIC {
         return false;
     }
 
-    public boolean condition4() {
-        return true;
+/**
+     * LIC4: There exists at least one set of Q PTS consecutive data points that lie in more than QUADS quadrants. Where there is ambiguity as to which quadrant contains a given point, 
+     * priority of decision will be by quadrant number, i.e., I, II, III, IV. For example, the data point (0,0) is in quadrant I, the point (-l,0) is in quadrant II, the point (0,-l) is in quadrant III, the point 
+     * (0,1) is in quadrant I and the point (1,0) is in quadrant I.
+     * @param x
+     * @param y
+     * @param numPoints
+     * @param qPts
+     * @param quads
+     * @return
+     */
+    public boolean condition4(double[] x, double[] y, int numPoints, int qPts, int quads) {
+        if (numPoints < qPts || qPts < 2 || quads < 1 || quads > 3) {
+            return false; // Condition cannot be met if constraints are violated. Check if qPts is within valid bounds
+        }
+
+        // Iterate over all possible sets of Q_PTS consecutive points
+        for (int i = 0; i <= numPoints - qPts; i++) {
+            boolean[] quadrantVisited = new boolean[4]; // Boolean array to track quadrants
+            int uniqueQuadrants = 0;
+
+            // Check the quadrant of each point in this subset
+            for (int j = i; j < i + qPts; j++) {
+                int quadrant = getQuadrant(x[j], y[j]);
+
+                if (!quadrantVisited[quadrant - 1]) { // If this quadrant hasn't been visited yet
+                    quadrantVisited[quadrant - 1] = true;
+                    uniqueQuadrants++;
+                }
+
+                // If the number of unique quadrants exceeds QUADS, return true
+                if (uniqueQuadrants > quads) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    /**
+     * Helperfunction for condition4 that checks which quadrant each point in the set of Q is in
+     * @param x
+     * @param y
+     * @return
+     */
+    private int getQuadrant(double x, double y) {
+        if (x >= 0 && y > 0) return 1;  // Quadrant I
+        if (x < 0 && y >= 0) return 2;  // Quadrant II
+        if (x <= 0 && y < 0) return 3;  // Quadrant III
+        if (x > 0 && y <= 0) return 4;  // Quadrant IV
+        return 1; // Default case, (0,0) as Quadrant I
     }
 
-    public boolean condition5() {
-        return true;
+
+    /**
+     * Checks if there exists at least one set of two consecutive data points
+     * (X[i], Y[i]) and (X[j], Y[j]), where j = i + 1, such that the difference
+     * between X[j] and X[i] is less than 0.
+     * 
+     * @param xArray The x coordinates.
+     * @param yArray The y coordinates.
+     * @return true if condition is met, false otherwise.
+     * @throws IllegalArgumentException if the arrays' lengths do not match.
+     */
+    public boolean condition5(double[] xArray, double[] yArray) {
+
+        if (xArray.length != yArray.length) {
+            throw new IllegalArgumentException("xArray and yArray arrays must have the same length.");
+        }
+
+        for (int i = 0; i < xArray.length - 1; i++) {
+            int j = i + 1;
+            if (xArray[j] - xArray[i] < 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public boolean condition6() {
-        return true;
+
+    /**
+     * Checks if at least one set of N_PTS consecutive points has a distance greater than DIST
+     * from the line joining the first and last points. If the first and last points are identical,
+     * the distance is calculated from the coincident point to the others.
+     * 
+     * @param xArray  Array of x coordinates.
+     * @param yArray  Array of y coordinates.
+     * @param npts    Number of consecutive points to check.
+     * @param dist    Distance threshold.
+     * @return        True if the condition is met, otherwise false.
+    */
+    public boolean condition6(double[] xArray, double[] yArray, int npts, double dist) {
+        if (xArray.length != yArray.length) {
+            throw new IllegalArgumentException("xArray and yArray must have the same length");
+        }
+        int numPoints = xArray.length;
+    
+        if (npts < 3 || numPoints < 3 || npts > xArray.length) {
+            return false;
+        }
+    
+        if (dist < 0) {
+            throw new IllegalArgumentException("DIST cannot be negative");
+        }      
+    
+        for (int i = 0; i <= numPoints - npts; i++) {
+            double[] npts_xPoints = new double[npts];
+            double[] npts_yPoints = new double[npts];
+    
+            System.arraycopy(xArray, i, npts_xPoints, 0, npts);
+            System.arraycopy(yArray, i, npts_yPoints, 0, npts);
+    
+            double firstPoint_x = npts_xPoints[0], firstPoint_y = npts_yPoints[0];
+            double lastPoint_x = npts_xPoints[npts - 1], lastPoint_y = npts_yPoints[npts - 1];
+    
+            for (int j = 1; j < npts - 1; j++) {
+                double currentPoint_x = npts_xPoints[j], currentPoint_y = npts_yPoints[j];
+                double distance = perpendicularDistance(firstPoint_x, firstPoint_y, lastPoint_x, lastPoint_y, currentPoint_x, currentPoint_y);
+    
+                if (distance > dist) {
+                    return true;
+                }
+            }
+        }
+    
+        return false;
     }
+    
 
     /**
      * LIC 7: 
@@ -132,21 +306,142 @@ public class LIC {
     }
 
 
-    public boolean condition8() {
-        return true;
+    public boolean condition8(double[] xArray, double[] yArray, double RADIUS1, int A_PTS, int B_PTS) {
+        if (xArray.length != yArray.length) throw new IllegalArgumentException("xArray and yArray must have the same length");
+        if (RADIUS1 < 0) throw new IllegalArgumentException("RADIUS1 must be greater than or equal to 0");
+        if (A_PTS < 1 || B_PTS < 1) throw new IllegalArgumentException("A_PTS and B_PTS must be at least 1");
+        if (A_PTS + B_PTS > xArray.length - 3) throw new IllegalArgumentException("A_PTS + B_PTS must be less than or equal to the length of xArray minus 3");
+
+
+
+    int numPoints = xArray.length;
+    
+       
+    for (int i = 0; i <= numPoints - (A_PTS + B_PTS + 3); i++) {
+        int j = i + A_PTS + 1; 
+        int k = j + B_PTS + 1; 
+
+        double[] p1 = {xArray[i], yArray[i]};
+        double[] p2 = {xArray[j], yArray[j]};
+        double[] p3 = {xArray[k], yArray[k]};
+
+        
+        double radius = minimalEnclosingCircleRadius(p1, p2, p3);
+        if (radius > RADIUS1) { 
+            return true; 
+            }
+        }
+        return false;
     }
 
-    public boolean condition9() {
-        return true;
+    /**
+     * LIC9: There exists at least one set of three data points separated by exactly C_PTS and D_PTS consecutive intervening points, which form an angle. The second points of the set of three points is always the vertex of the angle. If either the first point or the last point (or both) coincide with the vertex,
+     * the angle is undefined and the LIC is not satisfied by those three points. 
+     * When NUMPOINTS < 5, the condition is not met.
+     * @param x
+     * @param y
+     * @param numPoints
+     * @param epsilon
+     * @param cPts
+     * @param dPts
+     * @return
+     */
+    public boolean condition9(double[] x, double[] y, int numPoints, double epsilon, int cPts, int dPts) {
+        if (numPoints < 5 || epsilon < 0 || epsilon >= Math.PI || cPts < 1 || dPts < 1 || (cPts + dPts > numPoints - 3)) {
+            return false; // Condition cannot be met if requirements aren't satisfied
+        }
+
+        for (int i = 0; i < numPoints - (cPts + dPts) - 2; i++) {
+            // Select three points with given separation
+            double x1 = x[i], y1 = y[i];
+            double x2 = x[i + cPts + 1], y2 = y[i + cPts + 1]; // Vertex
+            double x3 = x[i + cPts + dPts + 2], y3 = y[i + cPts + dPts + 2];
+
+            // Check if the first or last point coincides with the vertex
+            if ((x1 == x2 && y1 == y2) || (x3 == x2 && y3 == y2)) {
+                continue; // Skip this as the angle is undefined
+            }
+
+            // Compute vectors
+            double v1x = x1 - x2, v1y = y1 - y2; // Vector from vertex to first point
+            double v2x = x3 - x2, v2y = y3 - y2; // Vector from vertex to last point
+
+            // Compute the dot product
+            double dotProduct = v1x * v2x + v1y * v2y;
+
+            //the magnitudes of the vectors
+            double mag1 = Math.sqrt(v1x * v1x + v1y * v1y);
+            double mag2 = Math.sqrt(v2x * v2x + v2y * v2y);
+
+            if (mag1 == 0 || mag2 == 0) {
+                continue; // Skip if any vector has zero length
+            }
+
+            // Compute the angle using the cosine rule
+            double angle = Math.acos(dotProduct / (mag1 * mag2));
+
+            // Check if the angle falls outside the range [PI - EPSILON, PI + EPSILON]
+            if (angle < (Math.PI - epsilon) || angle > (Math.PI + epsilon)) {
+                return true; // Condition is met
+            }
+        }
+        return false;
     }
 
-    public boolean condition10() {
-        return true;
+
+    /**
+     * LIC 10:
+     * There exists at least one set of three data points, separated by exactly 
+     * E_PTS and F_PTS consecutive intervening points, respectively, 
+     * that are the vertices of a triangle with area greater than AREA1.
+     * The condition is not met when NUMPOINTS < 5.
+     */
+    public boolean condition10(double[] x, double[] y, int epts, int fpts, double area1) {
+        if (x.length < 5) return false;  
+    
+        for (int i = 0; i < x.length - epts - fpts - 2; i++) {
+            double area = Math.abs(x[i] * (y[i + epts + 1] - y[i + epts + fpts + 2]) + 
+                                   x[i + epts + 1] * (y[i + epts + fpts + 2] - y[i]) + 
+                                   x[i + epts + fpts + 2] * (y[i] - y[i + epts + 1])) / 2;
+            if (area > area1) {
+                return true; 
+            }
+        }
+        return false;  
     }
 
-    public boolean condition11() {
-        return true;
+    /**
+     * LIC 11: There exists at least one set of two data points, (X[i], Y[i]) and (X[j], Y[j]), 
+     * separated by exactly G_PTS consecutive intervening points, such that X[j] < X[i]. 
+     * The condition is not met if NUMPOINTS < 3.
+     *
+     * @param xArray The array of X coordinates of the points.
+     * @param yArray The array of Y coordinates of the points. It must have the same length as xArray.
+     * @param gPts The number of intervening points between the two points being checked.
+     * @return true if a valid pair of points is found; false otherwise.
+     * @throws IllegalArgumentException if xArray and yArray have different lengths.
+     */
+
+    public boolean condition11(double[] xArray, double[] yArray, int gPts) {
+        if (xArray.length != yArray.length) {
+            throw new IllegalArgumentException("xArray and yArray must have the same length");
+        }
+        int numPoints = xArray.length;
+    
+        if (gPts < 1 || gPts > numPoints - 2) {
+            return false;
+        }
+        for (int i = 0; i < numPoints - gPts - 1; i++) {
+
+            int j = i + gPts + 1;
+            if (xArray[j] < xArray[i]) {
+                return true; 
+            }
+        }
+    
+        return false; 
     }
+    
 
     public boolean condition12(double[] x, double[] y, int numPoints, int kPts, int length1, int length2) {
         if (x.length != y.length) throw new IllegalArgumentException("x and y must have the same length");
@@ -167,11 +462,83 @@ public class LIC {
         return conditionMetlength1 && conditionMetlength2;
     }
 
-    public boolean condition13() {
-        return true;
+    public boolean condition13(double[] xArray, double[] yArray, double RADIUS1, double RADIUS2, int A_PTS, int B_PTS) {
+        
+        if (xArray.length != yArray.length) throw new IllegalArgumentException("xArray and yArray must have the same length");
+        if (RADIUS1 < 0 || RADIUS2 < 0) throw new IllegalArgumentException("RADIUS1 and RADIUS2 must be greater than or equal to 0");
+        if (A_PTS < 1 || B_PTS < 1) throw new IllegalArgumentException("A_PTS and B_PTS must be at least 1");
+
+        int numPoints = xArray.length;
+        if (numPoints < 5) return false;
+
+        boolean foundPartA = false;
+        boolean foundPartB = false;
+            
+       
+        for (int i = 0; i <= numPoints - (A_PTS + B_PTS + 3); i++) {
+            int j = i + A_PTS + 1;
+            int k = j + B_PTS + 1;
+
+            double[] p1 = {xArray[i], yArray[i]};
+            double[] p2 = {xArray[j], yArray[j]};
+            double[] p3 = {xArray[k], yArray[k]};
+
+       
+            double radius = minimalEnclosingCircleRadius(p1, p2, p3);
+
+            // Checking Part A: radius > RADIUS1 
+            if (radius > RADIUS1) {
+                foundPartA = true;
+            }
+
+            // Checking Part B: radius ≤ RADIUS2 
+            if (radius <= RADIUS2) {
+                foundPartB = true;
+            }
+
+            
+            if (foundPartA && foundPartB) {
+                break;
+            }
+        }
+
+        
+        return foundPartA && foundPartB;
+    
+    }
+        
+    /**
+     * LIC 14:
+     * There exists at least one set of three data points, separated by exactly 
+     * E_PTS and F_PTS consecutive intervening points, respectively, 
+     * that are the vertices of a triangle with area greater than AREA1.
+     * Additionally, there exists at least one set of three data points 
+     * (which can be the same or different) that form a triangle with area less than AREA2.
+     * The condition is not met when NUMPOINTS < 5.
+     */
+    public boolean condition14(double[] x, double[] y, int epts, int fpts, double area1, double area2) {
+        if (x.length < 5) return false;  
+        boolean cond1 = false;  
+        boolean cond2 = false;  
+        for (int i = 0; i < x.length - epts - fpts - 2; i++) {
+            double area = Math.abs(x[i] * (y[i + epts + 1] - y[i + epts + fpts + 2]) + 
+                                x[i + epts + 1] * (y[i + epts + fpts + 2] - y[i]) + 
+                                x[i + epts + fpts + 2] * (y[i] - y[i + epts + 1])) / 2;
+            if (area > area1) {
+                cond1 = true;  
+                break;  
+            }
+        }
+        for (int i = 0; i < x.length - epts - fpts - 2; i++) {
+            double area = Math.abs(x[i] * (y[i + epts + 1] - y[i + epts + fpts + 2]) + 
+                                x[i + epts + 1] * (y[i + epts + fpts + 2] - y[i]) + 
+                                x[i + epts + fpts + 2] * (y[i] - y[i + epts + 1])) / 2;
+            if (area < area2) {
+                cond2 = true;  
+                break;  
+            }
+        }
+        return cond1 && cond2;
     }
 
-    public boolean condition14() {
-        return true;
-    }
 }
