@@ -443,8 +443,23 @@ public class LIC {
     }
     
 
-    public boolean condition12() {
-        return true;
+    public boolean condition12(double[] x, double[] y, int numPoints, int kPts, int length1, int length2) {
+        if (x.length != y.length) throw new IllegalArgumentException("x and y must have the same length");
+        if (numPoints < 3) return false;
+        if (kPts <= 0) throw new IllegalArgumentException("kPts must be greater than or equal to 1");
+        if(length1 < 0 || length2 < 0) throw new IllegalArgumentException("Length1 and Length2 must be greater than or equal to 0");
+        boolean conditionMetlength1 = false;
+        boolean conditionMetlength2 = false;
+        double distance;
+        for (int i = 0; i < numPoints - kPts - 2; i++) {
+            distance = Math.sqrt(
+                Math.pow(x[i + kPts + 1] - x[i], 2) + 
+                Math.pow(y[i + kPts + 1] - y[i], 2)
+            );
+            if (distance > length1) conditionMetlength1 = true;
+            if (distance < length2) conditionMetlength2 = true;
+        }
+        return conditionMetlength1 && conditionMetlength2;
     }
 
     public boolean condition13(double[] xArray, double[] yArray, double RADIUS1, double RADIUS2, int A_PTS, int B_PTS) {
