@@ -393,7 +393,7 @@ public class LICTests {
         double[] yList = {0, 0, 0, 0};
         int kPts = 1;
         double length1 = 2;
-        int length2 = 5;
+        double length2 = 5;
         int numPoints = 4;
         assertTrue(lic.condition12(xList, yList, numPoints, kPts, length1, length2), "Expected true because there exists at least one set of two data points separated by exactly KPTS consecutive intervening points that are a distance greater than the length1 and one set of data points separated by exactly KPTS consecutive intervening points that are a distance less than the length2");
     }
@@ -409,7 +409,7 @@ public class LICTests {
         double[] yList = {0, 0, 0, 0};
         int kPts = 1;
         double length1 = 2;
-        int length2 = 2;
+        double length2 = 2;
         int numPoints = 4;
         assertFalse(lic.condition12(xList, yList, numPoints, kPts, length1, length2), "Expected false because there doesn't exist at least one set of two data points separated by exactly KPTS consecutive intervening points that are a distance greater than the length1 and one set of data points separated by exactly KPTS consecutive intervening points that are a distance less than the length2");
     }
@@ -425,7 +425,7 @@ public class LICTests {
         double[] yList = {0, 0};
         int kPts = 1;
         double length1 = 2;
-        int length2 = 5;
+        double length2 = 5;
         int numPoints = 2;
         assertFalse(lic.condition12(xList, yList, numPoints, kPts, length1, length2), "Expected false because there are less than 3 data points");
     }
@@ -441,7 +441,7 @@ public class LICTests {
         double[] yList = {0, 0, 0, 0};
         int kPts = 1;
         double length1 = 2;
-        int length2 = 3;
+        double length2 = 3;
         int numPoints = 4;
         assertFalse(lic.condition12(xList, yList, numPoints, kPts, length1, length2), "Expected false because condition is met for length1 but not for length2");
     }
@@ -457,7 +457,7 @@ public class LICTests {
         double[] yList = {0, 0, 0, 0};
         int kPts = 1;
         double length1 = 5;
-        int length2 = 2;
+        double length2 = 2;
         int numPoints = 4;
         assertFalse(lic.condition12(xList, yList, numPoints, kPts, length1, length2), "Expected false because condition is met for length2 but not for length1");
     }
