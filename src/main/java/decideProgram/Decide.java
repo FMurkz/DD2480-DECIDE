@@ -2,7 +2,7 @@ package decideProgram;
 
 public class Decide {
 
-    private static boolean[] computeCMV(double[] x, double[] y, Parameters params, int numPoints) {
+    public static boolean[] computeCMV(double[] x, double[] y, Parameters params, int numPoints) {
         LIC lic = new LIC();
         boolean[] cmv = new boolean[15];
 
