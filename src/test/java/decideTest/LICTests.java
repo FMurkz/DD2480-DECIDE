@@ -15,7 +15,7 @@ public class LICTests {
         LIC lic = new LIC();
         double[] xList = new double[]{1, 3};
         double[] yList = new double[]{1, 4};
-        int length1 = 2;
+        double length1 = 2;
         boolean result = lic.condition0(xList, yList, length1);
         assertTrue(result, "Expected true because the distance between two points is greater than length1");
     }
@@ -76,7 +76,7 @@ public class LICTests {
         LIC lic = new LIC();
         double[] xList = new double[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
         double[] yList = new double[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-        int length1 = 10;
+        double length1 = 10;
         boolean result = lic.condition0(xList, yList, length1);
         assertFalse(result, "Expected false because the distance is always less than length1");
     }
@@ -90,7 +90,7 @@ public class LICTests {
         LIC lic = new LIC();
         double[] xList = new double[]{};
         double[] yList = new double[]{};
-        int length1 = 2;
+        double length1 = 2;
         boolean result = lic.condition0(xList, yList, length1);
         assertFalse(result, "Expected false because there are no data points");
     }
@@ -104,7 +104,7 @@ public class LICTests {
         LIC lic = new LIC();
         double[] xList = new double[]{0};
         double[] yList = new double[]{0};
-        int length1 = 2;
+        double length1 = 2;
         boolean result = lic.condition0(xList, yList, length1);
         assertFalse(result, "Expected false because there is only one data point");
     }
@@ -330,7 +330,7 @@ public class LICTests {
         double[] yList = new double[]{0, 1, 5};
         int numPoints = 3;
         int kPts = 1;
-        int length1 = 2;
+        double length1 = 2;
         boolean result = lic.condition7(xList, yList, numPoints, kPts, length1);
         assertTrue(result, "Expected true because there exists at least one set of two data points separated by exactly KPTS consecutive intervening points that are a distance greater than the length1");
     }
@@ -346,7 +346,7 @@ public class LICTests {
         double[] yList = new double[]{0, 1, 2};
         int numPoints = 3;
         int kPts = 2;
-        int length1 = 1;
+        double length1 = 1;
         boolean result = lic.condition7(xList, yList, numPoints, kPts, length1);
         assertFalse(result, "Expected false because there doesn't exists one set of two data points separated by exactly KPTS consecutive intervening points that are a distance greater than the length1");
     }
@@ -362,7 +362,7 @@ public class LICTests {
         double[] yList = new double[]{0, 1};
         int numPoints = 2;
         int kPts = 1;
-        int length1 = 1;
+        double length1 = 1;
         boolean result = lic.condition7(xList, yList, numPoints, kPts, length1);
         assertFalse(result, "Expected false because there are less than 3 data points");
     }
@@ -378,7 +378,7 @@ public class LICTests {
         double[] yList = new double[]{0, 1, 2};
         int numPoints = 3;
         int kPts = 0;
-        int length1 = 1;
+        double length1 = 1;
         assertThrows(IllegalArgumentException.class, () -> lic.condition7(xList, yList, numPoints, kPts, length1), "Expected IllegalArgumentException because KPTS is less than 1");
     }
 
@@ -392,8 +392,8 @@ public class LICTests {
         double[] xList = {0, 1, 4, 5};
         double[] yList = {0, 0, 0, 0};
         int kPts = 1;
-        int length1 = 2;
-        int length2 = 5;
+        double length1 = 2;
+        double length2 = 5;
         int numPoints = 4;
         assertTrue(lic.condition12(xList, yList, numPoints, kPts, length1, length2), "Expected true because there exists at least one set of two data points separated by exactly KPTS consecutive intervening points that are a distance greater than the length1 and one set of data points separated by exactly KPTS consecutive intervening points that are a distance less than the length2");
     }
@@ -408,8 +408,8 @@ public class LICTests {
         double[] xList = {0, 1, 2, 3};
         double[] yList = {0, 0, 0, 0};
         int kPts = 1;
-        int length1 = 2;
-        int length2 = 2;
+        double length1 = 2;
+        double length2 = 2;
         int numPoints = 4;
         assertFalse(lic.condition12(xList, yList, numPoints, kPts, length1, length2), "Expected false because there doesn't exist at least one set of two data points separated by exactly KPTS consecutive intervening points that are a distance greater than the length1 and one set of data points separated by exactly KPTS consecutive intervening points that are a distance less than the length2");
     }
@@ -424,8 +424,8 @@ public class LICTests {
         double[] xList = {0, 1};
         double[] yList = {0, 0};
         int kPts = 1;
-        int length1 = 2;
-        int length2 = 5;
+        double length1 = 2;
+        double length2 = 5;
         int numPoints = 2;
         assertFalse(lic.condition12(xList, yList, numPoints, kPts, length1, length2), "Expected false because there are less than 3 data points");
     }
@@ -440,8 +440,8 @@ public class LICTests {
         double[] xList = {0, 1, 4, 5};
         double[] yList = {0, 0, 0, 0};
         int kPts = 1;
-        int length1 = 2;
-        int length2 = 3;
+        double length1 = 2;
+        double length2 = 3;
         int numPoints = 4;
         assertFalse(lic.condition12(xList, yList, numPoints, kPts, length1, length2), "Expected false because condition is met for length1 but not for length2");
     }
@@ -456,8 +456,8 @@ public class LICTests {
         double[] xList = {0, 1, 4, 5};
         double[] yList = {0, 0, 0, 0};
         int kPts = 1;
-        int length1 = 5;
-        int length2 = 2;
+        double length1 = 5;
+        double length2 = 2;
         int numPoints = 4;
         assertFalse(lic.condition12(xList, yList, numPoints, kPts, length1, length2), "Expected false because condition is met for length2 but not for length1");
     }
