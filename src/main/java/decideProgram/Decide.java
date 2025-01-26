@@ -25,7 +25,7 @@ public class Decide {
         return cmv;
     }
 
-    private static boolean[][] computePUM(boolean[] cmv, int[][] lcm) {
+    public static boolean[][] computePUM(boolean[] cmv, int[][] lcm) {
         boolean[][] pum = new boolean[15][15];
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 15; j++) {
