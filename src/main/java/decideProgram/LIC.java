@@ -58,7 +58,7 @@ public class LIC {
      * consecutive data points that are a distance greater 
      * than the length, LENGTH1, apart.
      */
-    public boolean condition0(double[] xArray, double[] yArray, int length1) {
+    public boolean condition0(double[] xArray, double[] yArray, double length1) {
 
         if (xArray.length!=yArray.length) throw new IllegalArgumentException("xArray and yArray must have the same length");
 
@@ -289,7 +289,7 @@ public class LIC {
      * K PTS consecutive intervening points that are a distance greater than the length, LENGTH1, apart. 
      * The condition is not met when NUMPOINTS < 3.
      */
-    public boolean condition7(double[] xArray, double[] yArray, int numPoints, int kPts, int length1) {
+    public boolean condition7(double[] xArray, double[] yArray, int numPoints, int kPts, double length1) {
         if (xArray.length!=yArray.length) throw new IllegalArgumentException("xArray and yArray must have the same length");
         if (numPoints < 3) return false;
         if (kPts <= 0) throw new IllegalArgumentException("kPts must be greater than or equal to 1");
@@ -443,7 +443,7 @@ public class LIC {
     }
     
 
-    public boolean condition12(double[] x, double[] y, int numPoints, int kPts, int length1, int length2) {
+    public boolean condition12(double[] x, double[] y, int numPoints, int kPts, double length1, double length2) {
         if (x.length != y.length) throw new IllegalArgumentException("x and y must have the same length");
         if (numPoints < 3) return false;
         if (kPts <= 0) throw new IllegalArgumentException("kPts must be greater than or equal to 1");
