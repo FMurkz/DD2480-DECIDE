@@ -25,6 +25,28 @@ public class Decide {
         return cmv;
     }
 
+    private static boolean[][] computePUM(boolean[] cmv, int[][] lcm) {
+        boolean[][] pum = new boolean[15][15];
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 15; j++) {
+                if (i == j) {
+                    pum[i][j] = true; 
+                    continue;
+                }
+                if (lcm[i][j] == 0) { // NOTUSED
+                    pum[i][j] = true;
+                }
+                else if (lcm[i][j] == 1) { // ANDD
+                    pum[i][j] = cmv[i] && cmv[j];
+                } 
+                else if (lcm[i][j] == 2) { // ORR
+                    pum[i][j] = cmv[i] || cmv[j];
+                }
+            }
+        }
+        return pum;
+    }
+
     public static boolean DECIDE(int numPoints, double[] x, double[] y, int[][] lcm, boolean[] puv, Parameters parameters){
         return true;
     }
