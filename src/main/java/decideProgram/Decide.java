@@ -75,6 +75,15 @@ public class Decide {
     }
 
     public static boolean DECIDE(int numPoints, double[] x, double[] y, int[][] lcm, boolean[] puv, Parameters parameters){
-        return true;
+        boolean[] cmv = computeCMV(x, y, parameters, numPoints);
+        boolean[][] pum = computePUM(cmv, lcm);
+        boolean[] fuv = calculateFUV(pum, puv);
+        boolean launch = determineLaunch(fuv);
+        if (launch) {
+            System.out.println("YES");
+        } else {
+            System.out.println("NO");
+        }
+        return launch;
     }
 }
