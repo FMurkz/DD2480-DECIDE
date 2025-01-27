@@ -143,5 +143,13 @@ public class DECIDETests {
         assertArrayEquals(expected, fuv, "FUV did not match the expected output");
     }
 
+    
+    @Test
+    public void test_determineLaunch() {
+        boolean[] fuv = {true, false, true};
+        Decide decide = new Decide();
+        boolean res = decide.determineLaunch(fuv);
+        assertFalse(res);
+    }
 
 }
