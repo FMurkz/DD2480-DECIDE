@@ -103,5 +103,23 @@ public class DECIDETests {
         }
         assertArrayEquals(expected, pum);
     }
-   
+
+    @Test
+    public void test_PUM_ANDD(){
+        boolean[] cmv = {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true};
+        int[][] lcm = new int[15][15];
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 15; j++) {
+                lcm[i][j] = 1;
+            }
+        }
+        boolean[][] pum = Decide.computePUM(cmv, lcm);
+        boolean[][] expected = new boolean[15][15];
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 15; j++) {
+                expected[i][j] = true;
+            }
+        }
+        assertArrayEquals(expected, pum);
+    }
 }
