@@ -122,4 +122,26 @@ public class DECIDETests {
         }
         assertArrayEquals(expected, pum);
     }
+
+    @Test
+    public void test_calculateFUV() {
+        // Initialize test data for PUM and PUV
+        boolean[][] pum = {
+            {true, true, false},
+            {true, true, true},
+            {false, true, true}
+        };
+        boolean[] puv = {true, false, true};
+
+        // Call the calculateFUV function
+        boolean[] fuv = Decide.calculateFUV(pum, puv);
+
+        // Expected output based on the inputs
+        boolean[] expected = {false, true, false};
+
+        // Assert the results
+        assertArrayEquals(expected, fuv, "FUV did not match the expected output");
+    }
+
+
 }

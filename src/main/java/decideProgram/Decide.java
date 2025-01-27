@@ -47,6 +47,24 @@ public class Decide {
         return pum;
     }
 
+    public static boolean[] calculateFUV(boolean[][] pum, boolean[] puv) {
+        boolean[] fuv = new boolean[puv.length];
+        for (int i = 0; i < fuv.length; i++) {
+            if (!puv[i]) {
+                fuv[i] = true;
+            } else {
+                fuv[i] = true;
+                for (int j = 0; j < fuv.length; j++) {
+                    if (!pum[i][j]) {
+                        fuv[i] = false;
+                        break;
+                    }
+                }
+            }
+        }
+        return fuv;
+    }
+
     public static boolean DECIDE(int numPoints, double[] x, double[] y, int[][] lcm, boolean[] puv, Parameters parameters){
         return true;
     }
