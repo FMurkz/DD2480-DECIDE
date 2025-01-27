@@ -73,6 +73,14 @@ public class LIC {
         return false;
     }
 
+    /**
+     * LIC 1: There exists at least one set of three consecutive data points that cannot all be contained 
+     * within or on a circle of radius RADIUS1.
+     * @param xArray Array of x-coordinates.
+     * @param yArray Array of y-coordinates.
+     * @param radius1 Radius threshold.
+     * @return True if condition is met, false otherwise.
+     */
     public boolean condition1(double[] xArray, double[] yArray, double radius1) {
 
         if (xArray.length != yArray.length) throw new IllegalArgumentException("xArray and yArray must have the same length");
@@ -145,6 +153,14 @@ public class LIC {
         }
     
 
+     /**
+     * LIC 3: There exists at least one set of three consecutive data points 
+     * that form a triangle with an area greater than AREA1.
+     * @param x Array of x-coordinates.
+     * @param y Array of y-coordinates.
+     * @param area1 The threshold area value.
+     * @return True if condition is met, false otherwise.
+     */
     public boolean condition3(double[] x, double[] y, double area1) {
         for (int i = 0; i < x.length - 2; i++) {
             double area = Math.abs(x[i] * (y[i+1] - y[i+2]) + x[i+1] * (y[i+2] - y[i]) + x[i+2] * (y[i] - y[i+1])) / 2;
@@ -306,6 +322,18 @@ public class LIC {
     }
 
 
+    /**
+     * LIC 8: There exists at least one set of three data points, separated by exactly
+     * A_PTS and B_PTS consecutive intervening points, respectively,
+     * that are the vertices of a triangle with a radius greater than RADIUS1.
+     * @param xArray The x-coordinates of the data points.
+     * @param yArray The y-coordinates of the data points.
+     * @param RADIUS1 The threshold radius.
+     * @param A_PTS The number of consecutive points between the first and second point.
+     * @param B_PTS The number of consecutive points between the second and third point.
+     * @return True if condition is met, false otherwise.
+     */
+
     public boolean condition8(double[] xArray, double[] yArray, double RADIUS1, int A_PTS, int B_PTS) {
         if (xArray.length != yArray.length) throw new IllegalArgumentException("xArray and yArray must have the same length");
         if (RADIUS1 < 0) throw new IllegalArgumentException("RADIUS1 must be greater than or equal to 0");
@@ -443,6 +471,20 @@ public class LIC {
     }
     
 
+    /**
+     * LIC 12: There exists at least one set of kPts consecutive data points such that:
+     * 1. The distance between the first and the last points is greater than length1.
+     * 2. The distance between the other points is less than length2.
+     * 
+     * @param x The x-coordinates of the data points.
+     * @param y The y-coordinates of the data points.
+     * @param numPoints The number of data points.
+     * @param kPts The number of consecutive points.
+     * @param length1 The minimum length condition.
+     * @param length2 The maximum length condition.
+     * @return True if the condition is satisfied, false otherwise.
+     */
+
     public boolean condition12(double[] x, double[] y, int numPoints, int kPts, double length1, double length2) {
         if (x.length != y.length) throw new IllegalArgumentException("x and y must have the same length");
         if (numPoints < 3) return false;
@@ -462,6 +504,20 @@ public class LIC {
         return conditionMetlength1 && conditionMetlength2;
     }
 
+    /**
+     * LIC 13: There exists at least one set of three data points separated by exactly 
+     * A_PTS and B_PTS consecutive intervening points, such that:
+     * 1. The radius of the minimal enclosing circle of the three points is greater than RADIUS1.
+     * 2. The radius of the minimal enclosing circle of the three points is less than or equal to RADIUS2.
+     * 
+     * @param xArray The x-coordinates of the data points.
+     * @param yArray The y-coordinates of the data points.
+     * @param RADIUS1 The minimum radius condition.
+     * @param RADIUS2 The maximum radius condition.
+     * @param A_PTS The number of consecutive intervening points for the first distance condition.
+     * @param B_PTS The number of consecutive intervening points for the second distance condition.
+     * @return True if both conditions are satisfied for at least one set of data points, false otherwise.
+     */
     public boolean condition13(double[] xArray, double[] yArray, double RADIUS1, double RADIUS2, int A_PTS, int B_PTS) {
         
         if (xArray.length != yArray.length) throw new IllegalArgumentException("xArray and yArray must have the same length");
