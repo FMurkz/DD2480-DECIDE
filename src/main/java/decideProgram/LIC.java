@@ -43,6 +43,14 @@ public class LIC {
     /**
       * Calculates the perpendicular distance from a point (x0, y0) 
       * to the line formed by two points (x1, y1) and (x2, y2).
+      * 
+      * @param x1 The x-coordinate of the first point on the line.
+      * @param y1 The y-coordinate of the first point on the line.
+      * @param x2 The x-coordinate of the second point on the line.
+      * @param y2 The y-coordinate of the second point on the line.
+      * @param x0 The x-coordinate of the point from which the perpendicular distance is measured.
+      * @param y0 The y-coordinate of the point from which the perpendicular distance is measured.
+      * @return The perpendicular distance from the point (x0, y0) to the line formed by (x1, y1) and (x2, y2).
     */
      public static double perpendicularDistance(double x1, double y1, double x2, double y2, double x0, double y0) {
         double A = y2 - y1;
@@ -57,7 +65,13 @@ public class LIC {
      * LIC 0: There exists at least one set of two 
      * consecutive data points that are a distance greater 
      * than the length, LENGTH1, apart.
-     */
+     * 
+     * @param xArray The array of x coordinates of the data points.
+     * @param yArray The array of y coordinates of the data points. It must have the same length as xArray.
+     * @param length1 The threshold distance. The method checks if there are two consecutive points with a distance greater than this value.
+     * @return true if the condition is met, false otherwise.
+     * @throws IllegalArgumentException if xArray and yArray do not have the same length, or if length1 is negative.
+    */
     public boolean condition0(double[] xArray, double[] yArray, double length1) {
 
         if (xArray.length!=yArray.length) throw new IllegalArgumentException("xArray and yArray must have the same length");
@@ -175,12 +189,13 @@ public class LIC {
      * LIC4: There exists at least one set of Q PTS consecutive data points that lie in more than QUADS quadrants. Where there is ambiguity as to which quadrant contains a given point, 
      * priority of decision will be by quadrant number, i.e., I, II, III, IV. For example, the data point (0,0) is in quadrant I, the point (-l,0) is in quadrant II, the point (0,-l) is in quadrant III, the point 
      * (0,1) is in quadrant I and the point (1,0) is in quadrant I.
-     * @param x
-     * @param y
-     * @param numPoints
-     * @param qPts
-     * @param quads
-     * @return
+     * 
+     * @param x The array of x coordinates of the data points.
+     * @param y The array of y coordinates of the data points. It must have the same length as x.
+     * @param numPoints The total number of data points.
+     * @param qPts The number of consecutive points to check.
+     * @param quads The maximum number of quadrants a set of points can be in to satisfy the condition.
+     * @return true if there exists at least one set of Q_PTS consecutive data points that lie in more than QUADS quadrants, false otherwise.
      */
     public boolean condition4(double[] x, double[] y, int numPoints, int qPts, int quads) {
         if (numPoints < qPts || qPts < 2 || quads < 1 || quads > 3) {
@@ -210,10 +225,18 @@ public class LIC {
         return false;
     }
     /**
-     * Helperfunction for condition4 that checks which quadrant each point in the set of Q is in
-     * @param x
-     * @param y
-     * @return
+     * This helper function checks which quadrant a given point belongs to.
+     * The point's position is determined by its x and y coordinates. 
+     * Based on these, the point is classified into one of four quadrants:
+     * 
+     * @param x The x-coordinate of the point.
+     * @param y The y-coordinate of the point.
+     * @return The quadrant number: 
+     * 1 for Quadrant I, 
+     * 2 for Quadrant II, 
+     * 3 for Quadrant III, 
+     * 4 for Quadrant IV. 
+     * If the point is (0, 0), it is considered to be in Quadrant I.
      */
     private int getQuadrant(double x, double y) {
         if (x >= 0 && y > 0) return 1;  // Quadrant I
@@ -304,7 +327,16 @@ public class LIC {
      * There exists at least one set of two data points separated by exactly
      * K PTS consecutive intervening points that are a distance greater than the length, LENGTH1, apart. 
      * The condition is not met when NUMPOINTS < 3.
+     * 
+     * @param xArray The array of x coordinates of the data points.
+     * @param yArray The array of y coordinates of the data points. It must have the same length as xArray.
+     * @param numPoints The total number of data points.
+     * @param kPts The number of intervening points between the two points being checked.
+     * @param length1 The threshold distance. The method checks if the distance between two points is greater than this value.
+     * @return true if the condition is met (i.e., two points with exactly kPts intervening points have a distance greater than length1), false otherwise.
+     * @throws IllegalArgumentException if xArray and yArray do not have the same length, or if kPts is less than or equal to 0.
      */
+     
     public boolean condition7(double[] xArray, double[] yArray, int numPoints, int kPts, double length1) {
         if (xArray.length!=yArray.length) throw new IllegalArgumentException("xArray and yArray must have the same length");
         if (numPoints < 3) return false;
@@ -366,13 +398,14 @@ public class LIC {
      * LIC9: There exists at least one set of three data points separated by exactly C_PTS and D_PTS consecutive intervening points, which form an angle. The second points of the set of three points is always the vertex of the angle. If either the first point or the last point (or both) coincide with the vertex,
      * the angle is undefined and the LIC is not satisfied by those three points. 
      * When NUMPOINTS < 5, the condition is not met.
-     * @param x
-     * @param y
-     * @param numPoints
-     * @param epsilon
-     * @param cPts
-     * @param dPts
-     * @return
+     * 
+     * @param x The array of x coordinates of the data points.
+     * @param y The array of y coordinates of the data points. It must have the same length as x.
+     * @param numPoints The total number of data points. 
+     * @param epsilon The maximum allowed deviation from π for the angle between the vectors.
+     * @param cPts The number of consecutive points between the first point and the vertex.
+     * @param dPts The number of consecutive points between the last point and the vertex.
+     * @return true if the condition is satisfied, false otherwise.
      */
     public boolean condition9(double[] x, double[] y, int numPoints, double epsilon, int cPts, int dPts) {
         if (numPoints < 5 || epsilon < 0 || epsilon >= Math.PI || cPts < 1 || dPts < 1 || (cPts + dPts > numPoints - 3)) {
@@ -423,6 +456,14 @@ public class LIC {
      * E_PTS and F_PTS consecutive intervening points, respectively, 
      * that are the vertices of a triangle with area greater than AREA1.
      * The condition is not met when NUMPOINTS < 5.
+     * 
+     * @param x An array containing the x-coordinates of the points.
+     * @param y An array containing the y-coordinates of the points. 
+     * @param epts The number of intervening points between the first and second data points.
+     * @param fpts The number of intervening points between the second and third data points.
+     * @param area1 The threshold area. The method checks if the area of the triangle formed by the three points exceeds this value.
+     * @return true if at least one set of three points forms a triangle with an area greater than area1; 
+     *  false otherwise.
      */
     public boolean condition10(double[] x, double[] y, int epts, int fpts, double area1) {
         if (x.length < 5) return false;  
@@ -571,6 +612,15 @@ public class LIC {
      * Additionally, there exists at least one set of three data points 
      * (which can be the same or different) that form a triangle with area less than AREA2.
      * The condition is not met when NUMPOINTS < 5.
+     * 
+     * @param x An array containing the x-coordinates of the points.
+     * @param y An array containing the y-coordinates of the points.
+     * @param epts The number of intervening points between the first and second data points.
+     * @param fpts The number of intervening points between the second and third data points.
+     * @param area1 The threshold area for the first triangle. The method checks if the area of the triangle exceeds this value.
+     * @param area2 The threshold area for the second triangle. The method checks if the area of the triangle is less than this value.
+     * @return true if both conditions are satisfied: one triangle with an area greater than area1 and another with an area less than area2;
+     *  false otherwise.
      */
     public boolean condition14(double[] x, double[] y, int epts, int fpts, double area1, double area2) {
         if (x.length < 5) return false;  
