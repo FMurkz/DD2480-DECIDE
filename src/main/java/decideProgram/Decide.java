@@ -2,6 +2,16 @@ package decideProgram;
 
 public class Decide {
 
+    /**
+     * Computes the Conditions Met Vector (CMV) based on the given parameters and points.
+     * Each element in the CMV corresponds to whether a specific Launch Interceptor Condition (LIC) is satisfied.
+     *
+     * @param x        The x-coordinates of the data points.
+     * @param y        The y-coordinates of the data points.
+     * @param params   Parameters required for evaluating the LICs.
+     * @param numPoints The number of data points provided.
+     * @return A boolean array representing the CMV, where each element is true if the corresponding LIC is satisfied.
+     */
     public static boolean[] computeCMV(double[] x, double[] y, Parameters params, int numPoints) {
         LIC lic = new LIC();
         boolean[] cmv = new boolean[15];
@@ -25,6 +35,14 @@ public class Decide {
         return cmv;
     }
 
+    /**
+     * Computes the Preliminary Unlocking Matrix (PUM) by combining CMV values
+     * based on the Logical Connector Matrix (LCM).
+     *
+     * @param cmv The Conditions Met Vector (CMV).
+     * @param lcm The Logical Connector Matrix (LCM), which specifies logical relationships between LICs.
+     * @return A 2D boolean array representing the PUM, where each entry indicates whether the corresponding LIC combination is satisfied.
+     */
     public static boolean[][] computePUM(boolean[] cmv, int[][] lcm) {
         boolean[][] pum = new boolean[15][15];
         for (int i = 0; i < 15; i++) {
@@ -47,6 +65,14 @@ public class Decide {
         return pum;
     }
 
+    /**
+     * Calculates the Final Unlocking Vector (FUV) by evaluating the PUM and Preliminary Unlocking Vector (PUV).
+     * An element in the FUV is true if the corresponding PUV element is false or all PUM entries in the row are true.
+     *
+     * @param pum The Preliminary Unlocking Matrix (PUM).
+     * @param puv The Preliminary Unlocking Vector (PUV), specifying the LICs relevant for the launch decision.
+     * @return A boolean array representing the FUV, where each element indicates the final unlocking status for a LIC.
+     */
     public static boolean[] calculateFUV(boolean[][] pum, boolean[] puv) {
         boolean[] fuv = new boolean[puv.length];
         for (int i = 0; i < fuv.length; i++) {
@@ -65,6 +91,13 @@ public class Decide {
         return fuv;
     }
 
+    /**
+     * Determines whether the interceptor launch condition is satisfied based on the Final Unlocking Vector (FUV).
+     * The launch is allowed only if all elements in the FUV are true.
+     *
+     * @param fuv The Final Unlocking Vector (FUV).
+     * @return True if the interceptor launch condition is met, false otherwise.
+     */
     public static boolean determineLaunch(boolean[] fuv) {
         for (boolean val : fuv) {
             if (!val) {
@@ -74,6 +107,19 @@ public class Decide {
         return true;
     }
 
+
+    /**
+     * The main decision-making function that integrates all computations to determine whether an interceptor should be launched.
+     * Outputs "YES" if the launch condition is satisfied, otherwise outputs "NO".
+     *
+     * @param numPoints The number of data points provided.
+     * @param x         The x-coordinates of the data points.
+     * @param y         The y-coordinates of the data points.
+     * @param lcm       The Logical Connector Matrix (LCM).
+     * @param puv       The Preliminary Unlocking Vector (PUV).
+     * @param parameters Parameters required for evaluating LICs.
+     * @return True if the interceptor launch condition is met, false otherwise.
+     */
     public static boolean DECIDE(int numPoints, double[] x, double[] y, int[][] lcm, boolean[] puv, Parameters parameters){
         boolean[] cmv = computeCMV(x, y, parameters, numPoints);
         boolean[][] pum = computePUM(cmv, lcm);
