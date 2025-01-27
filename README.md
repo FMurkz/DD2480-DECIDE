@@ -43,5 +43,48 @@ src/
 - **DECIDETests.java**: Contains unit tests for the decision function and the calculations made implemented in Decide.java
 
 
+## Contributions
+- **Felicia Murkes**
+    - Setup Repo
+    - Setup directory structure 
+    - Setup class files
+    - Setup junit tests
+    - Setup Maven
+    - Wrote pom.xml file
+    - Wrote condition 0, 7 and 12
+        - Wrote tests for each
+    - Wrote tests for computePUM()x
+    - Wrote Decide function + 1 test for the program
+
+
+- **Melissa Saber**
+    - Wrote conditions 2, 4 and 9
+        - Wrote tests for each
+    - Wrote a helper function for condition 4
+    - Wrote 2 tests for the program
+
+
+- **Bingjie Zhao**
+    - Wrote condition 3, 10 and 14
+        - Wrote tests for each
+    - Wrote determinelaunch() + test
+    - calculateFUV() + test
+
+
+- **Eyüp Ahmet Başaran**
+    - Wrote conditions 1, 8 and 13
+        - Wrote tests for each
+    - Wrote a helper function minimalEnclosingCircle()
+    - Wrote computeCMV()
+    - Wrote computePUM()
+
+- **Ismail Mohammed**
+    - Wrote condition 5, 6 and 11
+        - Wrote tests for each
+    - Wrote test cases for computeCMV()
+
+
+
+
 
 
