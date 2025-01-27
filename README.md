@@ -62,6 +62,7 @@ To run the program, use the following command:
 ```sh
 mvn exec:java
 ```
+This will run from Main.java where the main method is, you can change the input here.
 
 3. **Run Tests**
 
