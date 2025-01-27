@@ -84,7 +84,27 @@ src/
     - Wrote test cases for computeCMV()
 
 
+## Our workflow in Github
 
+For the LIC implementation we used test-driven development. Meaning that the person who was going toimplement the condition, had to first create tests for it, at least one that would return true and one false. This made sure that the person had a full understanding of the condition but also made sure that tests werent created with the implementation in mind.
 
+For most of the other implementations one group member wrote the tests after the implementation was made by another group member. This made sure that all of us got an understanding of the implementations.
+
+We used some prefixes for the commits so that we easily could see what each commit did
+- feat: a new implementation was made
+- test: testcase was written for a function or for the program
+- refactor: The code was changed in some way without implementing something new
+- fix: a bug was fixed
+- doc: documentation was added
+
+These were the steps we took once an issue was created and a group member was assigned to it
+
+1. A branch was created and named after the issue
+3. All the commits needed were committed
+    - All commits has a prefix
+    - All commits reference the issue by adding (#xx) at the end, xx being the issue number
+4. Once the issue has been fixed a pull request was made to merge it into main
+5. Any merge conflicts were handled
+6. Lastly it was merged into main
 
 
