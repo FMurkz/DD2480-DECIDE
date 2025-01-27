@@ -42,6 +42,40 @@ src/
 - **LICTests.java**: Contains unit tests for the conditions implemented in LIC.java
 - **DECIDETests.java**: Contains unit tests for the decision function and the calculations made implemented in Decide.java
 
+## Running the program
+
+First download Maven: you can do it [here](https://maven.apache.org/download.cgi)
+
+1. **Build the Project**
+
+
+First, build the project using the following command:
+
+```sh
+mvn clean install
+```
+
+2. **Run the Program**
+
+To run the program, use the following command:
+
+```sh
+mvn exec:java
+```
+
+3. **Run Tests**
+
+To run the tests, use the following command:
+
+```sh
+mvn test
+```
+
+This will execute all the unit tests.
+
+
+
+
 
 ## Contributions
 - **Felicia Murkes**
