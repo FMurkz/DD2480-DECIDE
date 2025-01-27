@@ -65,6 +65,15 @@ public class Decide {
         return fuv;
     }
 
+    public static boolean determineLaunch(boolean[] fuv) {
+        for (boolean val : fuv) {
+            if (!val) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static boolean DECIDE(int numPoints, double[] x, double[] y, int[][] lcm, boolean[] puv, Parameters parameters){
         return true;
     }
