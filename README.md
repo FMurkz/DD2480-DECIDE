@@ -116,6 +116,7 @@ This will execute all the unit tests.
 - **Ismail Mohammed**
     - Wrote condition 5, 6 and 11
         - Wrote tests for each
+    - Wrote a helper function perpendicularDistance()
     - Wrote test cases for computeCMV()
 
 
