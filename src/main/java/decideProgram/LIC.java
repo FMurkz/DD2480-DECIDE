@@ -189,9 +189,10 @@ public class LIC {
         return false;
     }
 
-/**
-     * LIC4: There exists at least one set of Q PTS consecutive data points that lie in more than QUADS quadrants. Where there is ambiguity as to which quadrant contains a given point, 
-     * priority of decision will be by quadrant number, i.e., I, II, III, IV. For example, the data point (0,0) is in quadrant I, the point (-l,0) is in quadrant II, the point (0,-l) is in quadrant III, the point 
+    /**
+     * LIC4: There exists at least one set of Q PTS consecutive data points that lie in more than QUADS quadrants. 
+     * Where there is ambiguity as to which quadrant contains a given point, priority of decision will be by quadrant number, i.e., I, II, III, IV. 
+     * For example, the data point (0,0) is in quadrant I, the point (-l,0) is in quadrant II, the point (0,-l) is in quadrant III, the point 
      * (0,1) is in quadrant I and the point (1,0) is in quadrant I.
      * 
      * @param x The array of x coordinates of the data points.
@@ -203,19 +204,19 @@ public class LIC {
      */
     public boolean condition4(double[] x, double[] y, int numPoints, int qPts, int quads) {
         if (numPoints < qPts || qPts < 2 || quads < 1 || quads > 3) {
-            return false; // Condition cannot be met if constraints are violated. Check if qPts is within valid bounds
+            return false; // Condition cant be met if constraints are violated. Check if qPts is within valid bounds
         }
 
         // Iterate over all possible sets of Q_PTS consecutive points
         for (int i = 0; i <= numPoints - qPts; i++) {
             boolean[] quadrantVisited = new boolean[4]; // Boolean array to track quadrants
-            int uniqueQuadrants = 0;
+            int uniqueQuadrants = 0; // Counter for distinct quadrants in this subset
 
             // Check the quadrant of each point in this subset
             for (int j = i; j < i + qPts; j++) {
-                int quadrant = getQuadrant(x[j], y[j]);
-
-                if (!quadrantVisited[quadrant - 1]) { // If this quadrant hasn't been visited yet
+                int quadrant = getQuadrant(x[j], y[j]); // Determine the quadrant of the current point
+            // If this quadrant hasn't been visited before, mark it and increment count
+                if (!quadrantVisited[quadrant - 1]) { 
                     quadrantVisited[quadrant - 1] = true;
                     uniqueQuadrants++;
                 }
@@ -236,11 +237,6 @@ public class LIC {
      * @param x The x-coordinate of the point.
      * @param y The y-coordinate of the point.
      * @return The quadrant number: 
-     * 1 for Quadrant I, 
-     * 2 for Quadrant II, 
-     * 3 for Quadrant III, 
-     * 4 for Quadrant IV. 
-     * If the point is (0, 0), it is considered to be in Quadrant I.
      */
     private int getQuadrant(double x, double y) {
         if (x >= 0 && y > 0) return 1;  // Quadrant I
