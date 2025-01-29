@@ -15,6 +15,15 @@ public class Decide {
     public static boolean[] computeCMV(double[] x, double[] y, Parameters params, int numPoints) {
         LIC lic = new LIC();
         boolean[] cmv = new boolean[15];
+        if (x == null || y == null || params == null) {
+            throw new IllegalArgumentException("Input arrays and parameters cannot be null");
+        }
+        if (x.length != y.length) {
+            throw new IllegalArgumentException("x and y arrays must have the same length");
+        }
+        if (numPoints < 2 || numPoints > 100) {
+            throw new IllegalArgumentException("numPoints must be in range [2, 100]");
+        }
 
         cmv[0] = lic.condition0(x, y, params.length1);
         cmv[1] = lic.condition1(x, y, params.radius1);
