@@ -219,6 +219,13 @@ public class DECIDETests {
     }
 
     @Test
+    public void test_determineLaunch_throwsException_nullFUV() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.determineLaunch(null);
+        }, "Expected IllegalArgumentException for null FUV");
+    }
+
+    @Test
     public void test_DECIDE_Launch_NOTUSED(){
         // Initialize test data
         double[] x = {0, 1, 2, 3, 4};
