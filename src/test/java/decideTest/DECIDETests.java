@@ -194,6 +194,16 @@ public class DECIDETests {
             Decide.calculateFUV(null, puv);
         }, "Expected IllegalArgumentException for null PUM");
     }
+
+    @Test
+    public void test_calculateFUV_throwsException_invalidPUMSize() {
+        boolean[][] invalidPum = new boolean[14][14]; // Invalid size
+        boolean[] puv = new boolean[15];
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.calculateFUV(invalidPum, puv);
+        }, "Expected IllegalArgumentException for incorrect PUM size");
+    }
     
     @Test
     public void test_determineLaunch() {
