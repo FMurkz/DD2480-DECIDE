@@ -1,5 +1,7 @@
 package decideProgram;
 
+import java.util.Arrays;
+
 public class Decide {
 
     /**
@@ -15,6 +17,15 @@ public class Decide {
     public static boolean[] computeCMV(double[] x, double[] y, Parameters params, int numPoints) {
         LIC lic = new LIC();
         boolean[] cmv = new boolean[15];
+        if (x == null || y == null || params == null) {
+            throw new IllegalArgumentException("Input arrays and parameters cannot be null");
+        }
+        if (x.length != y.length) {
+            throw new IllegalArgumentException("x and y arrays must have the same length");
+        }
+        if (numPoints < 2 || numPoints > 100) {
+            throw new IllegalArgumentException("numPoints must be in range [2, 100]");
+        }
 
         cmv[0] = lic.condition0(x, y, params.length1);
         cmv[1] = lic.condition1(x, y, params.radius1);
@@ -45,6 +56,12 @@ public class Decide {
      */
     public static boolean[][] computePUM(boolean[] cmv, int[][] lcm) {
         boolean[][] pum = new boolean[15][15];
+        if (cmv == null || lcm == null) {
+            throw new IllegalArgumentException("CMV and LCM cannot be null");
+        }
+        if (lcm.length != 15 || Arrays.stream(lcm).anyMatch(row -> row.length != 15)) {
+            throw new IllegalArgumentException("LCM must be a 15x15 matrix");
+        }
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 15; j++) {
                 if (i == j) {
@@ -74,6 +91,15 @@ public class Decide {
      * @return A boolean array representing the FUV, where each element indicates the final unlocking status for a LIC.
      */
     public static boolean[] calculateFUV(boolean[][] pum, boolean[] puv) {
+        if (pum == null || puv == null) {
+            throw new IllegalArgumentException("PUM and PUV cannot be null");
+        }
+        if (pum.length != 15 || Arrays.stream(pum).anyMatch(row -> row.length != 15)) {
+            throw new IllegalArgumentException("PUM must be a 15x15 matrix");
+        }
+        if (puv.length != 15) {
+            throw new IllegalArgumentException("PUV must be a 15-element array");
+        }
         boolean[] fuv = new boolean[puv.length];
         for (int i = 0; i < fuv.length; i++) {
             if (!puv[i]) {
@@ -99,6 +125,9 @@ public class Decide {
      * @return True if the interceptor launch condition is met, false otherwise.
      */
     public static boolean determineLaunch(boolean[] fuv) {
+        if (fuv == null) {
+            throw new IllegalArgumentException("FUV cannot be null");
+        }
         for (boolean val : fuv) {
             if (!val) {
                 return false;

@@ -86,6 +86,28 @@ public class DECIDETests {
     }
 
     @Test
+    public void test_computeCMV_throwsException_invalidNumPoints() {
+        double[] x = {0, 1};
+        double[] y = {0, 1};
+        Parameters params = new Parameters(2.0, 0.2, 1.5, 10.0, 3, 2, 1.0, 3, 1, 1, 1, 1, 1, 2, 3, 1, 3.0, 2.0, 15.0);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.computeCMV(x, y, params, 1);
+        }, "Expected IllegalArgumentException for numPoints < 2");
+    }
+
+    @Test
+    public void test_computeCMV_throwsException_nullParams() {
+        double[] x = {0, 1, 2};
+        double[] y = {0, 1, 4};
+        int numPoints = 3;
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.computeCMV(x, y, null, numPoints);
+        }, "Expected IllegalArgumentException for null Parameters");
+    }
+
+    @Test
     public void test_PUM_NOTUSED(){
         boolean[] cmv = {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true};
         int[][] lcm = new int[15][15];
@@ -124,32 +146,83 @@ public class DECIDETests {
     }
 
     @Test
-    public void test_calculateFUV() {
-        // Initialize test data for PUM and PUV
-        boolean[][] pum = {
-            {true, true, false},
-            {true, true, true},
-            {false, true, true}
-        };
-        boolean[] puv = {true, false, true};
+    public void test_computePUM_throwsException_invalidLCMSize() {
+        boolean[] cmv = new boolean[15];
+        int[][] invalidLcm = new int[14][14]; // Invalid LCM size
 
-        // Call the calculateFUV function
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.computePUM(cmv, invalidLcm);
+        }, "Expected IllegalArgumentException for incorrect LCM size");
+    }
+
+    @Test
+    public void test_computePUM_throwsException_nullInputs() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.computePUM(null, new int[15][15]);
+        }, "Expected IllegalArgumentException for null CMV");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.computePUM(new boolean[15], null);
+        }, "Expected IllegalArgumentException for null LCM");
+    }
+
+    @Test
+    public void test_calculateFUV_vaild() {
+        boolean[][] pum = new boolean[15][15];
+        for (int i = 0; i < 15; i++) {
+            Arrays.fill(pum[i], true);
+        }
+        boolean[] puv = new boolean[15];
+        Arrays.fill(puv, false);
         boolean[] fuv = Decide.calculateFUV(pum, puv);
-
-        // Expected output based on the inputs
-        boolean[] expected = {false, true, false};
-
-        // Assert the results
-        assertArrayEquals(expected, fuv, "FUV did not match the expected output");
+        boolean[] expectedFUV = new boolean[15];
+        Arrays.fill(expectedFUV, true);
+        assertArrayEquals(expectedFUV, fuv, "Expected all FUV elements to be true");
     }
 
     
+
+    @Test
+    public void test_calculateFUV_throwsException_nullPUM() {
+        boolean[] puv = new boolean[15];
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.calculateFUV(null, puv);
+        }, "Expected IllegalArgumentException for null PUM");
+    }
+
+    @Test
+    public void test_calculateFUV_throwsException_invalidPUMSize() {
+        boolean[][] invalidPum = new boolean[14][14]; // Invalid size
+        boolean[] puv = new boolean[15];
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.calculateFUV(invalidPum, puv);
+        }, "Expected IllegalArgumentException for incorrect PUM size");
+    }
+    
+    @Test
+    public void test_calculateFUV_throwsException_nullPUV() {
+        boolean[][] pum = new boolean[15][15];
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.calculateFUV(pum, null);
+        }, "Expected IllegalArgumentException for null PUV");
+    }
+
     @Test
     public void test_determineLaunch() {
         boolean[] fuv = {true, false, true};
         Decide decide = new Decide();
         boolean res = decide.determineLaunch(fuv);
         assertFalse(res);
+    }
+
+    @Test
+    public void test_determineLaunch_throwsException_nullFUV() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.determineLaunch(null);
+        }, "Expected IllegalArgumentException for null FUV");
     }
 
     @Test
