@@ -146,6 +146,16 @@ public class DECIDETests {
     }
 
     @Test
+    public void test_computePUM_throwsException_invalidLCMSize() {
+        boolean[] cmv = new boolean[15];
+        int[][] invalidLcm = new int[14][14]; // Invalid LCM size
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.computePUM(cmv, invalidLcm);
+        }, "Expected IllegalArgumentException for incorrect LCM size");
+    }
+
+    @Test
     public void test_calculateFUV() {
         // Initialize test data for PUM and PUV
         boolean[][] pum = {
