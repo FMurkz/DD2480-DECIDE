@@ -97,6 +97,17 @@ public class DECIDETests {
     }
 
     @Test
+    public void test_computeCMV_throwsException_nullParams() {
+        double[] x = {0, 1, 2};
+        double[] y = {0, 1, 4};
+        int numPoints = 3;
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.computeCMV(x, y, null, numPoints);
+        }, "Expected IllegalArgumentException for null Parameters");
+    }
+
+    @Test
     public void test_PUM_NOTUSED(){
         boolean[] cmv = {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true};
         int[][] lcm = new int[15][15];
