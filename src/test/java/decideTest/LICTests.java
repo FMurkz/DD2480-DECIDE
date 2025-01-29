@@ -630,8 +630,10 @@ public class LICTests {
         double[] yList = {};
         double RADIUS1 = 1.0;
         int A_PTS = 1, B_PTS = 1;
-        boolean result = lic.condition8(xList, yList, RADIUS1, A_PTS, B_PTS);
-        assertFalse(result, "Expected false because there are no points");
+        
+        assertThrows(IllegalArgumentException.class, () -> {
+            lic.condition8(xList, yList, RADIUS1, A_PTS, B_PTS);
+        }, "Expected IllegalArgumentException because there are no points");
     }
 
     /**
@@ -645,8 +647,10 @@ public class LICTests {
         double[] yList = {0, 0, 0, 0};
         double RADIUS1 = 1.0;
         int A_PTS = 1, B_PTS = 1;
-        boolean result = lic.condition8(xList, yList, RADIUS1, A_PTS, B_PTS);
-        assertFalse(result, "Expected false because there are fewer than 5 points");
+        
+        assertThrows(IllegalArgumentException.class, () -> {
+            lic.condition8(xList, yList, RADIUS1, A_PTS, B_PTS);
+        }, "Expected IllegalArgumentException because there are fewer than 5 points");
     }
 
     /**
