@@ -91,6 +91,15 @@ public class Decide {
      * @return A boolean array representing the FUV, where each element indicates the final unlocking status for a LIC.
      */
     public static boolean[] calculateFUV(boolean[][] pum, boolean[] puv) {
+        if (pum == null || puv == null) {
+            throw new IllegalArgumentException("PUM and PUV cannot be null");
+        }
+        if (pum.length != 15 || Arrays.stream(pum).anyMatch(row -> row.length != 15)) {
+            throw new IllegalArgumentException("PUM must be a 15x15 matrix");
+        }
+        if (puv.length != 15) {
+            throw new IllegalArgumentException("PUV must be a 15-element array");
+        }
         boolean[] fuv = new boolean[puv.length];
         for (int i = 0; i < fuv.length; i++) {
             if (!puv[i]) {
