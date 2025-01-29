@@ -156,6 +156,17 @@ public class DECIDETests {
     }
 
     @Test
+    public void test_computePUM_throwsException_nullInputs() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.computePUM(null, new int[15][15]);
+        }, "Expected IllegalArgumentException for null CMV");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.computePUM(new boolean[15], null);
+        }, "Expected IllegalArgumentException for null LCM");
+    }
+
+    @Test
     public void test_calculateFUV() {
         // Initialize test data for PUM and PUV
         boolean[][] pum = {
