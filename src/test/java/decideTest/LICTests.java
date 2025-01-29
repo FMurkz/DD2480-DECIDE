@@ -119,6 +119,50 @@ public class LICTests {
         assertFalse(result, "Expected false: radius equals RADIUS1");
     }
 
+    /**
+     * LIC1
+     * Test case with fewer than 3 points
+     */
+    @Test
+    public void test_condition1_NotEnoughPoints() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1}; // Only 2 points
+        double[] yList = {0, 0};
+        double RADIUS1 = 1.0;
+        boolean result = lic.condition1(xList, yList, RADIUS1);
+        assertFalse(result, "Expected false because there are fewer than 3 points");
+    }
+
+    /**
+     * LIC1
+     * Test case with no points
+     */
+    @Test
+    public void test_condition1_NoPoints() {
+        LIC lic = new LIC();
+        double[] xList = {}; // Empty arrays
+        double[] yList = {};
+        double RADIUS1 = 1.0;
+        boolean result = lic.condition1(xList, yList, RADIUS1);
+        assertFalse(result, "Expected false because there are no points");
+    }
+
+    /**
+     * LIC1
+     * Test case with negative radius
+     */
+    @Test
+    public void test_condition1_NegativeRadius() {
+        LIC lic = new LIC();
+        double[] xList = {0, 2, 1};
+        double[] yList = {0, 0, Math.sqrt(3)};
+        double RADIUS1 = -1.0; // Invalid negative radius
+        
+        assertThrows(IllegalArgumentException.class, () -> {
+            lic.condition1(xList, yList, RADIUS1);
+        }, "Expected IllegalArgumentException because RADIUS1 is negative");
+    }
+
      /**
      * LIC2
      * Test case with too few points
@@ -576,6 +620,91 @@ public class LICTests {
     }
 
      /**
+     * LIC8
+     * Test case with no points
+     */
+    @Test
+    public void test_condition8_NoPoints() {
+        LIC lic = new LIC();
+        double[] xList = {}; // Empty arrays
+        double[] yList = {};
+        double RADIUS1 = 1.0;
+        int A_PTS = 1, B_PTS = 1;
+        
+        assertThrows(IllegalArgumentException.class, () -> {
+            lic.condition8(xList, yList, RADIUS1, A_PTS, B_PTS);
+        }, "Expected IllegalArgumentException because there are no points");
+    }
+
+    /**
+     * LIC8
+     * Test case with fewer than 5 points
+     */
+    @Test
+    public void test_condition8_LessThan5Points() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3}; // Only 4 points
+        double[] yList = {0, 0, 0, 0};
+        double RADIUS1 = 1.0;
+        int A_PTS = 1, B_PTS = 1;
+        
+        assertThrows(IllegalArgumentException.class, () -> {
+            lic.condition8(xList, yList, RADIUS1, A_PTS, B_PTS);
+        }, "Expected IllegalArgumentException because there are fewer than 5 points");
+    }
+
+    /**
+     * LIC8
+     * Test case with invalid A_PTS (less than 1)
+     */
+    @Test
+    public void test_condition8_InvalidAPTS() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 4};
+        double[] yList = {0, 0, 0, 0, 0};
+        double RADIUS1 = 1.0;
+        int A_PTS = 0, B_PTS = 1; // A_PTS < 1
+        
+        assertThrows(IllegalArgumentException.class, () -> {
+            lic.condition8(xList, yList, RADIUS1, A_PTS, B_PTS);
+        }, "Expected IllegalArgumentException because A_PTS is less than 1");
+    }
+
+    /**
+     * LIC8
+     * Test case with invalid B_PTS (less than 1)
+     */
+    @Test
+    public void test_condition8_InvalidBPTS() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 4};
+        double[] yList = {0, 0, 0, 0, 0};
+        double RADIUS1 = 1.0;
+        int A_PTS = 1, B_PTS = 0; // B_PTS < 1
+        
+        assertThrows(IllegalArgumentException.class, () -> {
+            lic.condition8(xList, yList, RADIUS1, A_PTS, B_PTS);
+        }, "Expected IllegalArgumentException because B_PTS is less than 1");
+    }
+
+    /**
+     * LIC8
+     * Test case where A_PTS + B_PTS > numpoints - 3
+     */
+    @Test
+    public void test_condition8_InvalidPointSpacing() {
+        LIC lic = new LIC();
+        double[] xList = {0, 1, 2, 3, 4}; // 5 points
+        double[] yList = {0, 0, 0, 0, 0};
+        double RADIUS1 = 1.0;
+        int A_PTS = 2, B_PTS = 2; // 2 + 2 > 5 - 3
+        
+        assertThrows(IllegalArgumentException.class, () -> {
+            lic.condition8(xList, yList, RADIUS1, A_PTS, B_PTS);
+        }, "Expected IllegalArgumentException because A_PTS + B_PTS > numpoints - 3");
+    }
+
+    /**
      * LIC9
      * Test case where the three chosen points form a clear valid angle outside [PI - epsilon, PI + epsilon]
      */
