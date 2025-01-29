@@ -86,6 +86,17 @@ public class DECIDETests {
     }
 
     @Test
+    public void test_computeCMV_throwsException_invalidNumPoints() {
+        double[] x = {0, 1};
+        double[] y = {0, 1};
+        Parameters params = new Parameters(2.0, 0.2, 1.5, 10.0, 3, 2, 1.0, 3, 1, 1, 1, 1, 1, 2, 3, 1, 3.0, 2.0, 15.0);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.computeCMV(x, y, params, 1);
+        }, "Expected IllegalArgumentException for numPoints < 2");
+    }
+
+    @Test
     public void test_PUM_NOTUSED(){
         boolean[] cmv = {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true};
         int[][] lcm = new int[15][15];
