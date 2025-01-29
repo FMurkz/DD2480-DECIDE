@@ -121,6 +121,9 @@ public class Decide {
      * @return True if the interceptor launch condition is met, false otherwise.
      */
     public static boolean DECIDE(int numPoints, double[] x, double[] y, int[][] lcm, boolean[] puv, Parameters parameters){
+        if(numPoints!=x.length || numPoints!=y.length){
+            throw new IllegalArgumentException("The number of points must be equal to the length of x and y arrays");
+        }
         boolean[] cmv = computeCMV(x, y, parameters, numPoints);
         boolean[][] pum = computePUM(cmv, lcm);
         boolean[] fuv = calculateFUV(pum, puv);
