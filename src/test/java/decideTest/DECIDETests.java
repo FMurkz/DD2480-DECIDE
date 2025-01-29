@@ -206,6 +206,15 @@ public class DECIDETests {
     }
     
     @Test
+    public void test_calculateFUV_throwsException_nullPUV() {
+        boolean[][] pum = new boolean[15][15];
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.calculateFUV(pum, null);
+        }, "Expected IllegalArgumentException for null PUV");
+    }
+
+    @Test
     public void test_determineLaunch() {
         boolean[] fuv = {true, false, true};
         Decide decide = new Decide();
