@@ -384,4 +384,51 @@ public class DECIDETests {
             Decide.DECIDE(numPoints, x, y, lcm, puv, params);
         });
     }
+
+    @Test
+    public void test_DECIDE_Invalid_numPoints_Not_Equal_To_x_And_y() {
+        // Initialize test data
+        double[] x = {0, 1, 2, 3, 4};
+        double[] y = {0, 1, 4, 9, 16};
+        int numPoints = 1;
+
+        // Define LCM (Logical Connector Matrix) with all NOTUSED
+        int[][] lcm = new int[15][15];
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 15; j++) {
+                lcm[i][j] = 0; // Default: NOTUSED
+            }
+        }
+
+        // Define PUV (Preliminary Unlocking Vector)
+        boolean[] puv = {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true};
+
+        // Define invalid parameters (negative length1)
+        Parameters params = new Parameters(
+            2.0,  // length1
+            0.2,   // epsilon
+            1.5,   // radius1
+            10.0,  // area1
+            3,     // qpts
+            2,     // quads
+            1.0,   // dist
+            3,     // npts
+            1,     // kpts
+            1,     // aptS
+            1,     // bpts
+            1,     // cpts
+            1,     // dpts
+            2,     // epts
+            3,     // fpts
+            1,     // gpts
+            3.0,   // length2
+            2.0,   // radius2
+            15.0   // area2
+        );
+
+        // Verify that an exception is thrown due to invalid input
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.DECIDE(numPoints, x, y, lcm, puv, params);
+        });
+    }
 }
