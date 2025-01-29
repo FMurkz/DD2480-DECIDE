@@ -1,5 +1,7 @@
 package decideProgram;
 
+import java.util.Arrays;
+
 public class Decide {
 
     /**
@@ -54,6 +56,12 @@ public class Decide {
      */
     public static boolean[][] computePUM(boolean[] cmv, int[][] lcm) {
         boolean[][] pum = new boolean[15][15];
+        if (cmv == null || lcm == null) {
+            throw new IllegalArgumentException("CMV and LCM cannot be null");
+        }
+        if (lcm.length != 15 || Arrays.stream(lcm).anyMatch(row -> row.length != 15)) {
+            throw new IllegalArgumentException("LCM must be a 15x15 matrix");
+        }
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 15; j++) {
                 if (i == j) {
