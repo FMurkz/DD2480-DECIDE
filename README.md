@@ -144,3 +144,7 @@ These were the steps we took once an issue was created and a group member was as
 6. Lastly it was merged into main
 
 
+## Our way-of-working
+
+We started this project with the analysis of the problem and familiarization with our working environment. Then, based on our skills, we set the principles by deciding on the tools to work with: Java, JUnit, and Maven. Further, we came up with the project skeleton; the project's structure was outlined and the main practices were determined. Felicia led this phase by implementing a well-organized project structure and guiding our way of working, which eventually allowed us to make the transition into the "In Use" phase. Here, we followed an issue-based task approach, where we created an issue for each task, and made each commit related to an issue. After getting comfortable with this workflow we progressed to "In Place" phase where everyone was clearly using the agreed-upon practices, implementing their tasks with no conflict. We couldn't achieve the stage of "Working Well" because refinement and guidance on practices are still necessary, but this project really helped in creating a very strong balance in the team. Therefore, with such a solid foundation, we do think that this would be possible for upcoming projects.
+
