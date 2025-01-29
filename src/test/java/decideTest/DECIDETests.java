@@ -186,6 +186,14 @@ public class DECIDETests {
         assertArrayEquals(expected, fuv, "FUV did not match the expected output");
     }
 
+    @Test
+    public void test_calculateFUV_throwsException_nullPUM() {
+        boolean[] puv = new boolean[15];
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            Decide.calculateFUV(null, puv);
+        }, "Expected IllegalArgumentException for null PUM");
+    }
     
     @Test
     public void test_determineLaunch() {
