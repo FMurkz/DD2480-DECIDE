@@ -118,48 +118,52 @@ public class LIC {
     }
 
     /**
-     * LIC2: There exists at least one set of three consecutive data points which form an angle such that the angle is either smaller than pi-epsilon or larger than pi + epsilon
-     * @param x
-     * @param y
-     * @param numPoints
+     * LIC2: There exists at least one set of three consecutive data points 
+     * which form an angle such that the angle is either smaller than pi-epsilon 
+     * or larger than pi + epsilon
+     * @param x  Array of x-coordinates of the data points.
+     * @param y  Array of y-coordinates of the data points.
+     * @param numPoints  Number of data points in the input arrays.
      * @param epsilon
      * @return True if LIC2 is satisfied, false otherwise
      */
     public boolean condition2(double[] x, double[] y, int numPoints, double epsilon) {
+        // Check if there are fewer than 3 points or if epsilon is out of bounds
         if (numPoints < 3 || epsilon < 0 || epsilon >= Math.PI) {
-            return false; } // Condition cant be met if we have fewer than 3 points
+            return false; }
+            // Iterate through all sets of three consecutive points
             for (int i = 0; i < numPoints - 2; i++) {
                 // Extract three consecutive points
-                double x1 = x[i], y1 = y[i];
-                double x2 = x[i + 1], y2 = y[i + 1]; // Vertex
+                double x1 = x[i], y1 = y[i]; 
+                double x2 = x[i + 1], y2 = y[i + 1]; // Vertex (middle point)
                 double x3 = x[i + 2], y3 = y[i + 2];
     
                 // Check if the first or last point coincides with the vertex
                 if ((x1 == x2 && y1 == y2) || (x3 == x2 && y3 == y2)) {
-                    continue; // Skip this set as the angle is undefined
+                    continue; // Skip as the angle is undefined
                 }
     
-                //vectors
-                double v1x = x1 - x2, v1y = y1 - y2; // Vector from vertex to first point
-                double v2x = x3 - x2, v2y = y3 - y2; // Vector from vertex to last point
+                // Compute the vectors from the vertex to the other two points
+                double v1x = x1 - x2, v1y = y1 - y2; 
+                double v2x = x3 - x2, v2y = y3 - y2; 
     
-                //dot product
+                // Compute the dot product of the two vectors
                 double dotProduct = v1x * v2x + v1y * v2y;
     
                 //the magnitudes of the vectors
                 double mag1 = Math.sqrt(v1x * v1x + v1y * v1y);
                 double mag2 = Math.sqrt(v2x * v2x + v2y * v2y);
-    
+                // Check if any vector has zero length (which would make angle undefined)
                 if (mag1 == 0 || mag2 == 0) {
-                    continue; // Skip if any vector has zero length
+                    continue;
                 }
     
-                // Compute the angle using the cosine rule
+                // Compute the angle using the arccosine rule
                 double angle = Math.acos(dotProduct / (mag1 * mag2));
     
                 // Check if the angle falls outside the range [PI - EPSILON, PI + EPSILON]
                 if (angle < (Math.PI - epsilon) || angle > (Math.PI + epsilon)) {
-                    return true; // Condition is met
+                    return true; // Condition is met, return true
                 }
             }
     
@@ -185,9 +189,10 @@ public class LIC {
         return false;
     }
 
-/**
-     * LIC4: There exists at least one set of Q PTS consecutive data points that lie in more than QUADS quadrants. Where there is ambiguity as to which quadrant contains a given point, 
-     * priority of decision will be by quadrant number, i.e., I, II, III, IV. For example, the data point (0,0) is in quadrant I, the point (-l,0) is in quadrant II, the point (0,-l) is in quadrant III, the point 
+    /**
+     * LIC4: There exists at least one set of Q PTS consecutive data points that lie in more than QUADS quadrants. 
+     * Where there is ambiguity as to which quadrant contains a given point, priority of decision will be by quadrant number, i.e., I, II, III, IV. 
+     * For example, the data point (0,0) is in quadrant I, the point (-l,0) is in quadrant II, the point (0,-l) is in quadrant III, the point 
      * (0,1) is in quadrant I and the point (1,0) is in quadrant I.
      * 
      * @param x The array of x coordinates of the data points.
@@ -199,19 +204,19 @@ public class LIC {
      */
     public boolean condition4(double[] x, double[] y, int numPoints, int qPts, int quads) {
         if (numPoints < qPts || qPts < 2 || quads < 1 || quads > 3) {
-            return false; // Condition cannot be met if constraints are violated. Check if qPts is within valid bounds
+            return false; // Condition cant be met if constraints are violated. Check if qPts is within valid bounds
         }
 
         // Iterate over all possible sets of Q_PTS consecutive points
         for (int i = 0; i <= numPoints - qPts; i++) {
             boolean[] quadrantVisited = new boolean[4]; // Boolean array to track quadrants
-            int uniqueQuadrants = 0;
+            int uniqueQuadrants = 0; // Counter for distinct quadrants in this subset
 
             // Check the quadrant of each point in this subset
             for (int j = i; j < i + qPts; j++) {
-                int quadrant = getQuadrant(x[j], y[j]);
-
-                if (!quadrantVisited[quadrant - 1]) { // If this quadrant hasn't been visited yet
+                int quadrant = getQuadrant(x[j], y[j]); // Determine the quadrant of the current point
+            // If this quadrant hasn't been visited before, mark it and increment count
+                if (!quadrantVisited[quadrant - 1]) { 
                     quadrantVisited[quadrant - 1] = true;
                     uniqueQuadrants++;
                 }
@@ -232,11 +237,6 @@ public class LIC {
      * @param x The x-coordinate of the point.
      * @param y The y-coordinate of the point.
      * @return The quadrant number: 
-     * 1 for Quadrant I, 
-     * 2 for Quadrant II, 
-     * 3 for Quadrant III, 
-     * 4 for Quadrant IV. 
-     * If the point is (0, 0), it is considered to be in Quadrant I.
      */
     private int getQuadrant(double x, double y) {
         if (x >= 0 && y > 0) return 1;  // Quadrant I
