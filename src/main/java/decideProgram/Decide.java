@@ -125,6 +125,9 @@ public class Decide {
      * @return True if the interceptor launch condition is met, false otherwise.
      */
     public static boolean determineLaunch(boolean[] fuv) {
+        if (fuv == null) {
+            throw new IllegalArgumentException("FUV cannot be null");
+        }
         for (boolean val : fuv) {
             if (!val) {
                 return false;
