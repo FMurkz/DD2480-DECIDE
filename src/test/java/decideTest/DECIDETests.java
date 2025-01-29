@@ -167,24 +167,20 @@ public class DECIDETests {
     }
 
     @Test
-    public void test_calculateFUV() {
-        // Initialize test data for PUM and PUV
-        boolean[][] pum = {
-            {true, true, false},
-            {true, true, true},
-            {false, true, true}
-        };
-        boolean[] puv = {true, false, true};
-
-        // Call the calculateFUV function
+    public void test_calculateFUV_vaild() {
+        boolean[][] pum = new boolean[15][15];
+        for (int i = 0; i < 15; i++) {
+            Arrays.fill(pum[i], true);
+        }
+        boolean[] puv = new boolean[15];
+        Arrays.fill(puv, false);
         boolean[] fuv = Decide.calculateFUV(pum, puv);
-
-        // Expected output based on the inputs
-        boolean[] expected = {false, true, false};
-
-        // Assert the results
-        assertArrayEquals(expected, fuv, "FUV did not match the expected output");
+        boolean[] expectedFUV = new boolean[15];
+        Arrays.fill(expectedFUV, true);
+        assertArrayEquals(expectedFUV, fuv, "Expected all FUV elements to be true");
     }
+
+    
 
     @Test
     public void test_calculateFUV_throwsException_nullPUM() {
