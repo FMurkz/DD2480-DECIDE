@@ -104,6 +104,8 @@ This will execute all the unit tests.
         - Wrote tests for each
     - Wrote determinelaunch() + test
     - calculateFUV() + test
+    - Added tests for functions in Decide.java
+    - Wrote javadoc for Decide.java
 
 
 - **Eyüp Ahmet Başaran**
@@ -118,6 +120,7 @@ This will execute all the unit tests.
         - Wrote tests for each
     - Wrote a helper function perpendicularDistance()
     - Wrote test cases for computeCMV()
+    - Wrote javadoc for LIC functions
 
 
 ## Our workflow in Github
